@@ -26,6 +26,6 @@ setup(
 	"""
         [ckan.plugins]
 	# Add plugins here, eg
-	# myplugin=ckanext.cmap:PluginClass
+	cmap=ckanext.cmap.plugin:ExamplePlugin
 	""",
 )
