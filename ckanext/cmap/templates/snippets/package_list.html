@@ -1,0 +1,45 @@
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip=""
+  >
+
+  <ul class="datasets">
+    <li class="first">
+    <div id="header">
+        <div class="search-name">Name</div><div class="search-popularity">Popularity</div><div class="search-type">Type</div>
+    </div>
+    </li>  
+    <li py:for="package in packages"
+        class="${'fullyopen' if (package.isopen and package.get('resources')) else None}">
+      <div style="float: left; clear: both; width: 508px; padding-right: 30px;">
+      <div class="header">
+          <span class="title">
+              ${h.link_to(package.get('title') or package.get('name'), h.url_for(controller='package', action='read', id=package.get('name')))}
+          </span>
+      </div>
+      
+      <div class="extract">
+          ${h.markdown_extract(package.notes)}
+      </div>
+      
+      <div class="tags2">
+          <div py:if="package.tags" class="tags">
+              <span style="color:#ffffff;margin-left:5px; margin-right:5px; padding-left: 5px; padding-right:5px; background-color: #bbbbbb; font-family: helvetica neue;"  py:for="tag in package.tags">${tag.name}</span>
+          </div>
+      </div>
+      </div>
+      <div class="search_meta">
+          <p>0 views</p>
+       </div>
+       
+        <div class="search_type" style="float: left; width: 42px;">
+          <div id="typeicon">&nbsp;</div>
+       </div>
+   
+   </li>
+  </ul>
+
+</html>
