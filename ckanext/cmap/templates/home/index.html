@@ -1,0 +1,48 @@
+<html xmlns:py="http://genshi.edgewall.org/"
+  xmlns:i18n="http://genshi.edgewall.org/i18n"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip=""
+  >
+ <xi:include href="../facets.html" />
+  <py:def function="body_class">${h.literal('no-sidebar')}</py:def>
+ 
+  <py:def function="page_title">Welcome</py:def>
+
+  <div py:match="//div[@id='content']" class="content">
+     
+   ${c.datasets} 
+         
+  </div>
+  
+  
+  <div py:match="//div[@id='sidebar']" class="left-sidebar">
+    <div>
+      <h1 class="page_heading">Browsed Data:</h1>
+    </div>
+    <div class="row">
+      <div class="span4">   
+        
+      </div>
+    </div>
+    <div py:if="c.groups" class="row whoelse">
+      <div class="span12">
+        <h2>Categories</h2>
+      </div>
+    </div>
+    
+    <div class="row">
+      <py:for each="i, group_dict in enumerate(c.groups[:6])">
+        <div class="span4">
+          <div class="group">
+            <h3><a href="${h.url_for(controller='group', action='read', id=group_dict['name'])}">${group_dict['title']}</a></h3>
+        
+          </div>
+        </div>
+      </py:for>
+    </div>
+  </div>
+  
+  
+  <xi:include href="layout.html" />
+</html>
+
