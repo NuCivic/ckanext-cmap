@@ -12,6 +12,8 @@ class ExamplePlugin(SingletonPlugin):
         rootdir = os.path.dirname(os.path.dirname(here))
         template_dir = os.path.join(rootdir, 'ckanext', 'cmap', 'templates')
         config['extra_template_paths'] = ','.join([template_dir, config.get('extra_template_paths', '')])
+        public_dir = os.path.join(rootdir, 'ckanext', 'cmap', 'public')
+        config['extra_public_paths'] = ','.join([public_dir, config.get('extra_public_paths', '')])
 
     def package_form(self):
         return 'package/new_package_form.html'
