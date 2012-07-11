@@ -1,11 +1,11 @@
 import os
-from ckan.plugins import implements, SingletonPlugin
-from ckan.plugins import IDatasetForm, IConfigurer
+import ckan.plugins as plugins
+import ckan.plugins.toolkit as toolkit
+import ckan.logic as logic
 
-
-class ExamplePlugin(SingletonPlugin):
-    implements(IDatasetForm, inherit=True)
-    implements(IConfigurer, inherit=True)
+class ExamplePlugin(plugins.SingletonPlugin):
+    plugins.implements(plugins.IDatasetForm, inherit=True)
+    plugins.implements(plugins.IConfigurer, inherit=True)
 
     def update_config(self, config):
         here = os.path.dirname(__file__)
@@ -39,14 +39,12 @@ class ExamplePlugin(SingletonPlugin):
     def package_types(self):
         return ['mpdataset']
 
-
     def setup_template_variables(self, context, data_dict=None, package_type=None):
         try:
             data = {'vocabulary_id': u'country_codes'}
-            c.geographical_coverage = get_action('tag_list')(context, data)
-        except NotFound:
-            c.geographical_coverage = []
-
+            toolkit.c.geographical_coverage = logic.get_action('tag_list')(context, data)
+        except logic.NotFound:
+            toolkit.c.geographical_coverage = []
 
     def form_to_db_schema(self, package_type=None):
         from ckan.logic.schema import package_form_schema
@@ -62,8 +60,8 @@ class ExamplePlugin(SingletonPlugin):
     def db_to_form_schema(data, package_type=None):
         from ckan.logic.converters import convert_from_tags, free_tags_only
         from ckan.lib.navl.validators import ignore_missing, keep_extras
-    
-        schema = package_form_schema()
+
+        schema = logic.package_form_schema()
         schema.update({
             'tags': {
                 '__extras': [keep_extras, free_tags_only]
