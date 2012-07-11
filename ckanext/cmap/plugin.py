@@ -6,6 +6,7 @@ import ckan.logic as logic
 class ExamplePlugin(plugins.SingletonPlugin):
     plugins.implements(plugins.IDatasetForm, inherit=True)
     plugins.implements(plugins.IConfigurer, inherit=True)
+    plugins.implements(plugins.IRoutes, inherit=True)
 
     def update_config(self, config):
         here = os.path.dirname(__file__)
@@ -14,6 +15,12 @@ class ExamplePlugin(plugins.SingletonPlugin):
         config['extra_template_paths'] = ','.join([template_dir, config.get('extra_template_paths', '')])
         public_dir = os.path.join(rootdir, 'ckanext', 'cmap', 'public')
         config['extra_public_paths'] = ','.join([public_dir, config.get('extra_public_paths', '')])
+
+    def before_map(self, mapper):
+        # This makes CKAN's search page (which would normally appear at
+        # /dataset) appear at the root URL.
+        mapper.connect('home', '/', controller='package', action='search')
+        return mapper
 
     def package_form(self):
         return 'package/new_package_form.html'
