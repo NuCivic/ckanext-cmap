@@ -5,7 +5,7 @@ body.no-sidebar .content-outer {
 }
 
 .header.outer {
-  /*cbackground-color: #e2e2e2;
+  /*background-color: #e2e2e2;
   background-image: -webkit-gradient(linear, left top, left bottom, from(#e2e2e2), to(#cccccc));
   background-image: -webkit-linear-gradient(top, #e2e2e2, #cccccc);
   background-image:    -moz-linear-gradient(top, #e2e2e2, #cccccc);
