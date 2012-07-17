@@ -50,6 +50,20 @@
       <p>The URL for the image that is associated with this organization.</p>
     </div>
   </div>
+
+  <!-- CMAP's custom Group Form metadata field. -->
+  ${data}
+  <div class="control-group">
+    <label class="control-label">Group Type:</label>
+    <div class="controls">
+      <select id="cmap_group_type" name="cmap_group_type">
+        <py:for each="group_type in c.cmap_group_types">
+          <option value="${group_type}" py:attrs="{'selected': 'selected' if group_type == data.get('cmap_group_type', '') else None}" >${group_type}</option>
+        </py:for>
+      </select>
+    </div>
+  </div>
+
   <div class="state-field control-group" py:if="c.is_sysadmin or c.auth_for_change_state">
     <label for="" class="control-label">State</label>
     <div class="controls">
@@ -80,43 +94,6 @@
 		</select>
 	</div>
   </div>
-
-
-<fieldset id="extras">
-  <h3>Extras</h3>
-  <dl>
-    <py:with vars="extras = data.get('extras', [])">
-    <py:for each="num, extra in enumerate(data.get('extras', []))">
-    <div class="control-group">
-      <label class="control-label" for="extras__${num}__value">${extra.get('key')}</label>
-      <div class="controls">
-        <input id="extras__${num}__key" name="extras__${num}__key" type="hidden" value="${extra.get('key')}" />
-        <input id="extras__${num}__value" name="extras__${num}__value" type="text" value="${extra.get('value')}" />
-        <label class="checkbox" style="display: inline-block;">
-          <input type="checkbox" name="extras__${num}__deleted" checked="${extra.get('deleted')}" />Delete
-        </label>
-      </div>
-    </div>
-    </py:for>
-    <hr py:if="len(extras)" class="extras-divider" />
-    <py:for each="num in range(len(extras), len(extras) + 4)">
-      <div class="control-group">
-        <label class="control-label" for="extras__${num}__key">Add...</label>
-        <div class="controls">
-          <label>
-            <span class="extras-label">Key =</span>
-            <input class="medium-width" id="extras__${num}__key" name="extras__${num}__key" type="text" />
-          </label>
-          <label>
-            <span class="extras-label">Value =</span>
-            <input class="medium-width" id="extras__${num}__value" name="extras__${num}__value" type="text" />
-          </label>
-        </div>
-      </div>
-    </py:for>
-    </py:with>
-  </dl>
-</fieldset>
 
 <?python
     import ckan.model as model

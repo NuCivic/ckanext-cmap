@@ -1,6 +1,8 @@
 import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
+import ckan.logic.schema
+import ckan.logic.converters as converters
 import ckan.lib.navl.validators as validators
 import ckan.lib.base as base
 import ckan.authz as authz
@@ -77,11 +79,27 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
 
     def form_to_db_schema(self):
         '''Return the schema for mapping group data from the form to the db.'''
-        return logic.schema.group_form_schema()
+        schema = ckan.logic.schema.group_form_schema()
+
+        # Add CMAP's custom Group Type metadata field to the schema.
+        schema.update({
+           'cmap_group_type': [validators.ignore_missing, unicode,
+               converters.convert_to_extras]
+           })
+
+        return schema
 
     def db_to_form_schema(self):
         '''Return the schema for mapping group data from the db to the form.'''
-        return logic.schema.group_form_schema()
+        schema = ckan.logic.schema.group_form_schema()
+
+        # Add CMAP's custom Group Type metadata field to the schema.
+        schema.update({
+         'cmap_group_type': [converters.convert_from_extras,
+             validators.ignore_missing],
+           })
+
+        return schema
 
     def setup_template_variables(self, context, data_dict):
         toolkit.c.user_groups = toolkit.c.userobj.get_groups('organization')
@@ -105,6 +123,12 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
             if grps:
                 toolkit.c.parent = grps[0]
             toolkit.c.users = group.members_of_type(base.model.User)
+
+        # Add the options for the custom 'Group Type' metadata field to the
+        # template context.
+        toolkit.c.cmap_group_types = ("Municipality", "County",
+                "Citizen Group")
+
 
 class CMAPDatasetForm(plugins.SingletonPlugin):
     '''Plugin that implements ckanext-cmap's custom dataset form.
@@ -147,7 +171,7 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         return 'organization_package_form.html'
 
     def form_to_db_schema(self):
-        schema = logic.schema.form_to_db_package_schema()
+        schema = ckan.logic.schema.form_to_db_package_schema()
         schema['groups']['capacity'] = [validators.ignore_missing, unicode]
         schema['__after'] = [group_required]
         return schema
