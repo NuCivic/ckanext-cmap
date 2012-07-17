@@ -24,7 +24,6 @@ setup(
     entry_points=\
     """
     [ckan.plugins]
-    # Add plugins here, eg
     cmap_routing=ckanext.cmap.routing:CMAPRoutingPlugin
     cmap_configurer=ckanext.cmap.configurer:CMAPConfigurerPlugin
     cmap_organization_form=ckanext.cmap.forms:CMAPOrganizationForm
