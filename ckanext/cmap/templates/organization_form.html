@@ -51,7 +51,7 @@
     </div>
   </div>
 
-  <!-- CMAP's custom Group Form metadata field. -->
+  <!-- CMAP's custom Group Type metadata field. -->
   <div class="control-group">
     <label class="control-label">Group Type:</label>
     <div class="controls">
@@ -60,6 +60,15 @@
           <option value="${group_type}" py:attrs="{'selected': 'selected' if group_type == data.get('cmap_group_type', '') else None}" >${group_type}</option>
         </py:for>
       </select>
+    </div>
+  </div>
+
+  <!-- CMAP's custom Website URL metadata field. -->
+  <div class="control-group">
+    <label class="control-label">Website URL:</label>
+    <div class="controls">
+      <input id="website_url" name="website_url" type="text" value="${data.get('website_url', '')}"/>
+      <p>The URL of this organization's website.</p>
     </div>
   </div>
 
