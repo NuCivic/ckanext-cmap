@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<root>
+  <data>
+    <geoglevels>
+      <geoglevel id="BK" name="Census Block" suigeneris="false" />
+      <geoglevel id="BG" name="Census Blockgroup" suigeneris="false" />
+      <geoglevel id="TR" name="Census Tract" suigeneris="false" />
+      <geoglevel id="CA" name="Chicago Community Area" suigeneris="false" />
+      <geoglevel id="CH" name="City of Chicago" suigeneris="true" />
+      <geoglevel id="UN" name="College-University" suigeneris="false" />
+      <geoglevel id="CO" name="County" suigeneris="false" />
+      <geoglevel id="MU" name="Municipality" suigeneris="false" />
+      <geoglevel id="RE" name="Region" suigeneris="true" />
+      <geoglevel id="ST" name="State" suigeneris="true" />
+    </geoglevels>
+  </data>
+  <messages />
+  <errors />
+  <eventlog />
+  <appvars />
+</root>
