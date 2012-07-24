@@ -89,6 +89,10 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
                converters.convert_to_extras]
            })
 
+        # Add CMAP's custom Website URL metadata field to the schema.
+        schema.update({'website_url': [validators.ignore_missing, unicode,
+                    converters.convert_to_extras]})
+
         return schema
 
     def db_to_form_schema(self):
@@ -100,6 +104,10 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
          'cmap_group_type': [converters.convert_from_extras,
              validators.ignore_missing],
            })
+
+        # Add CMAP's custom Website URL metadata field to the schema.
+        schema.update({'website_url': [converters.convert_from_extras,
+            validators.ignore_missing]})
 
         return schema
 

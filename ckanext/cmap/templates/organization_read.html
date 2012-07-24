@@ -38,6 +38,12 @@
           </ul>
         </li>
         </py:if>
+        <py:if test="c.group_dict.get('website_url', '')">
+        <li>
+          <h3>Website</h3>
+          <a href="${c.group_dict.website_url}">${c.group_dict.website_url}</a>
+        </li>
+        </py:if>
         <py:if test='group_editors and in_group'>
         <li>
         <h3>Members</h3>
