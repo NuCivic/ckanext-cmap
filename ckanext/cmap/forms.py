@@ -6,6 +6,8 @@ import ckan.logic.converters as converters
 import ckan.lib.navl.validators as validators
 import ckan.lib.base as base
 import ckan.authz as authz
+import metropulse
+import os
 
 def group_required(key, data, errors, context):
     # We want at least a group in the data we are provided.
@@ -172,9 +174,20 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
 
     def form_to_db_schema(self):
         schema = ckan.logic.schema.form_to_db_package_schema()
+
         schema['groups']['capacity'] = [validators.ignore_missing, unicode]
         schema['__after'] = [group_required]
+
+        schema.update({'cmap_geographical_level': [validators.ignore_missing, unicode, converters.convert_to_extras]})
+
         return schema
+
+#    def db_to_form_schema(self):
+#        schema = ckan.logic.schema.db_to_form_package_schema()
+
+#        schema.update({'cmap_geographical_level': [converters.convert_from_extras, validators.ignore_missing]})
+
+#        return schema
 
     def setup_template_variables(self, context, data_dict):
         data_dict.update({'available_only': True})
@@ -195,3 +208,17 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
                 toolkit.c.auth_for_change_state = True
             except logic.NotAuthorized:
                 toolkit.c.auth_for_change_state = False
+
+        #Get MetroPulse fields and add them to the form        
+        here = os.path.dirname(__file__)
+        rootdir = os.path.dirname(os.path.dirname(here))
+        
+        geogLevelsFile = open(os.path.join(rootdir, 'MetroPulseGeogLevels.xml'), 'r')
+        geogLevelsXml = geogLevelsFile.read()
+
+        fieldsFile = open(os.path.join(rootdir, 'MetroPulseFields.xml'), 'r')
+        fieldsXml = fieldsFile.read()
+
+        geogLevelsList = metropulse.getFilteredChildren(geogLevelsXml, "geoglevels", ('id', 'name'))
+        toolkit.c.cmap_geog_levels = geogLevelsList
+

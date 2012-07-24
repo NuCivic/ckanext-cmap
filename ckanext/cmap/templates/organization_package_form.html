@@ -126,6 +126,21 @@ if organization:
     </div>
 </div>
 
+ <!-- CMAP's Geographic level metadata field -->
+
+  <div class="control-group">
+    <label class="control-label">Geographical Level:</label>
+    <div class="controls">
+      <select id="cmap_geographical_levelXX" name="cmap_geographical_levelXX">
+        <py:for each="(geog_code, geog_level) in c.cmap_geog_levels">
+          <option value="${geog_code}" py:attrs="{'selected': 'selected' if geog_level == data.get('cmap_geographical_level', '') else None}">${geog_level}</option>
+        </py:for>
+      </select>
+    </div>
+  </div>
+
+
+
   <div class="control-group tags-field">
     <label class="control-label">Tags</label>
     <div class="controls">
