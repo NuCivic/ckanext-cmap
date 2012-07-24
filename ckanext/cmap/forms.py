@@ -182,12 +182,12 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
 
         return schema
 
-#    def db_to_form_schema(self):
-#        schema = ckan.logic.schema.db_to_form_package_schema()
+    def db_to_form_schema(self):
+        schema = ckan.logic.schema.db_to_form_package_schema()
 
-#        schema.update({'cmap_geographical_level': [converters.convert_from_extras, validators.ignore_missing]})
+        schema.update({'cmap_geographical_level': [converters.convert_from_extras, validators.ignore_missing]})
 
-#        return schema
+        return schema
 
     def setup_template_variables(self, context, data_dict):
         data_dict.update({'available_only': True})

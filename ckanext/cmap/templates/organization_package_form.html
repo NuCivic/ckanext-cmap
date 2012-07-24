@@ -129,11 +129,11 @@ if organization:
  <!-- CMAP's Geographic level metadata field -->
 
   <div class="control-group">
-    <label class="control-label">Geographical Level:</label>
+    <label class="control-label">Geographical Level</label>
     <div class="controls">
-      <select id="cmap_geographical_levelXX" name="cmap_geographical_levelXX">
+      <select id="cmap_geographical_level" name="cmap_geographical_level">
         <py:for each="(geog_code, geog_level) in c.cmap_geog_levels">
-          <option value="${geog_code}" py:attrs="{'selected': 'selected' if geog_level == data.get('cmap_geographical_level', '') else None}">${geog_level}</option>
+          <option value="${geog_code}" py:attrs="{'selected': 'selected' if geog_code == data.get('cmap_geographical_level', '') else None}">${geog_level}</option>
         </py:for>
       </select>
     </div>
