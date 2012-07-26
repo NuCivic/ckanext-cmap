@@ -172,6 +172,17 @@ if organization:
     </div>
   </div>
 
+  <div class="control-group">
+    <label class="control-label">Data Field</label>
+    <div class="controls">
+      <select id="cmap_data_field" name="cmap_data_field" width="400" style="width: 400px">
+        <py:for each="(field_code, field) in c.cmap_data_fields">
+          <option value="${field_code}" py:attrs="{'selected': 'selected' if field_code == data.get('cmap_data_field', '') else None}">${field}</option>
+        </py:for>
+      </select>
+    </div>
+  </div>
+
 
 
   <div class="control-group tags-field">

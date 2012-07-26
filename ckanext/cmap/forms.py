@@ -190,6 +190,7 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         schema.update({'cmap_data_family': [validators.ignore_missing, unicode, converters.convert_to_extras]})
         schema.update({'cmap_data_category': [validators.ignore_missing, unicode, converters.convert_to_extras]})
         schema.update({'cmap_data_subcategory': [validators.ignore_missing, unicode, converters.convert_to_extras]})
+        schema.update({'cmap_data_field': [validators.ignore_missing, unicode, converters.convert_to_extras]})
 
         return schema
 
@@ -200,6 +201,7 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         schema.update({'cmap_data_family': [converters.convert_from_extras, validators.ignore_missing]})
         schema.update({'cmap_data_category': [converters.convert_from_extras, validators.ignore_missing]})
         schema.update({'cmap_data_subcategory': [converters.convert_from_extras, validators.ignore_missing]})
+        schema.update({'cmap_data_field': [converters.convert_from_extras, validators.ignore_missing]})
 
         return schema
 
@@ -236,16 +238,18 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         geogLevelsList = metropulse.getFilteredChildren(geogLevelsXml, "geoglevels", ('id', 'name'))
         toolkit.c.cmap_geog_levels = geogLevelsList
 
-        #attributeRegEx = {'geoglevels': '[\S]*CO[\S]*'}
-        dataFamilyList = metropulse.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'))
+        #For filtering on geographic levels, add param attributeRegEx = {'geoglevels': '[\S]*CO[\S]*'}
+        dataFamilyList = metropulse.getFilteredChildren(fieldsXml, "data", ('id', 'caption'))
         toolkit.c.cmap_data_families = dataFamilyList
 
-        #attributeRegEx = {'geoglevels': '[\S]*CO[\S]*'}
-        dataCatList = metropulse.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'))
+        dataCatList = metropulse.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'))
         toolkit.c.cmap_data_categories = dataCatList
 
-        dataSubcatList = metropulse.getFilteredChildren(fieldsXml, "datasubcat", ('id', 'caption'))
+        dataSubcatList = metropulse.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'))
         toolkit.c.cmap_data_subcategories = dataSubcatList
+
+        dataFieldList = metropulse.getFilteredChildren(fieldsXml, "datasubcat", ('id', 'caption'))
+        toolkit.c.cmap_data_fields = dataFieldList
 
 
 
