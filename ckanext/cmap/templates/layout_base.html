@@ -40,12 +40,12 @@
   </py:if>
 
   ${h.literal(getattr(g, 'template_head_end', ''))}
+
 </head>
 
 <body class="${request.environ.get('pylons.routes_dict', {}).get('action')}
              ${request.environ.get('pylons.routes_dict', {}).get('controller').split(':')[-1]}
-             ${defined('body_class') and body_class()}
-  ">
+             ${defined('body_class') and body_class()} ${request.environ.get('pylons.routes_dict', {}).get('id')}">
 
   <div id="wrap">
   <header class="container">
@@ -58,6 +58,8 @@
             <a href="${h.url_for(controller='user',action='login')}">Login</a>
             <a href="${h.url_for(controller='user',action='register')}">Register</a>
           </span>
+
+
         </div>
         <a href="${h.url('home')}">
           <img width="64" src="${h.url_for_static(g.site_logo)}" alt="${g.site_title} Logo" title="${g.site_title} Logo" id="logo" />
