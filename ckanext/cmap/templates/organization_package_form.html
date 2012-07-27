@@ -2,6 +2,7 @@
   py:with="tab_mode=(c.action=='edit')"
   class="${'tab-content' if tab_mode else ''} ${'has-errors' if errors else ''} form-horizontal"
   id="dataset-edit"
+  name="dataset_edit"
   method="post"
   xmlns:i18n="http://genshi.edgewall.org/i18n"
   xmlns:py="http://genshi.edgewall.org/"
@@ -132,7 +133,8 @@ if organization:
     <label class="control-label">Geographical Level</label>
     <div class="controls">
       <select id="cmap_geographical_level" name="cmap_geographical_level">
-        <py:for each="(geog_code, geog_level) in c.cmap_geog_levels">
+        <option value="">None</option>
+	<py:for each="(geog_code, geog_level) in c.cmap_geog_levels">
           <option value="${geog_code}" py:attrs="{'selected': 'selected' if geog_code == data.get('cmap_geographical_level', '') else None}">${geog_level}</option>
         </py:for>
       </select>
@@ -143,6 +145,7 @@ if organization:
     <label class="control-label">Data Family</label>
     <div class="controls">
       <select id="cmap_data_family" name="cmap_data_family" width="300" style="width: 300px">
+        <option value="">None</option>
         <py:for each="(family_code, family) in c.cmap_data_families">
           <option value="${family_code}" py:attrs="{'selected': 'selected' if family_code == data.get('cmap_data_family', '') else None}">${family}</option>
         </py:for>
@@ -154,6 +157,7 @@ if organization:
     <label class="control-label">Data Category</label>
     <div class="controls">
       <select id="cmap_data_category" name="cmap_data_category" width="400" style="width: 400px">
+        <option value="">None</option>
         <py:for each="(cat_code, cat) in c.cmap_data_categories">
           <option value="${cat_code}" py:attrs="{'selected': 'selected' if cat_code == data.get('cmap_data_category', '') else None}">${cat}</option>
         </py:for>
@@ -165,6 +169,7 @@ if organization:
     <label class="control-label">Data Subcategory</label>
     <div class="controls">
       <select id="cmap_data_subcategory" name="cmap_data_subcategory" width="400" style="width: 400px">
+        <option value="">None</option>
         <py:for each="(subcat_code, subcat) in c.cmap_data_subcategories">
           <option value="${subcat_code}" py:attrs="{'selected': 'selected' if subcat_code == data.get('cmap_data_subcategory', '') else None}">${subcat}</option>
         </py:for>
@@ -176,6 +181,7 @@ if organization:
     <label class="control-label">Data Field</label>
     <div class="controls">
       <select id="cmap_data_field" name="cmap_data_field" width="400" style="width: 400px">
+        <option value="">None</option>
         <py:for each="(field_code, field) in c.cmap_data_fields">
           <option value="${field_code}" py:attrs="{'selected': 'selected' if field_code == data.get('cmap_data_field', '') else None}">${field}</option>
         </py:for>
