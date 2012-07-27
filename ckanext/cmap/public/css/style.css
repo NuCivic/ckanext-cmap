@@ -5,25 +5,19 @@ body.no-sidebar .content-outer {
 }
 
 .header.outer {
-  /*background-color: #e2e2e2;
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#e2e2e2), to(#cccccc));
-  background-image: -webkit-linear-gradient(top, #e2e2e2, #cccccc);
-  background-image:    -moz-linear-gradient(top, #e2e2e2, #cccccc);
-  background-image:     -ms-linear-gradient(top, #e2e2e2, #cccccc);
-  background-image:      -o-linear-gradient(top, #e2e2e2, #cccccc);
-  background-image:         linear-gradient(top, #e2e2e2, #cccccc);
-            filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#e2e2e2', EndColorStr='#cccccc');
-
-  margin-bottom: 18px;
-     -moz-box-shadow: 0px 2px 15px #dddddd;
-  -webkit-box-shadow: 0px 2px 15px #dddddd;
-          box-shadow: 0px 2px 15px #dddddd;
-  
-  border-bottom: 1px solid #ccc;
-  height: 188px;*/
     background: url("../img/header_insidepage2.jpg") no-repeat scroll 0 0 transparent;
     border-bottom: 1px solid #CCCCCC;
     height: 80px;
+    margin-bottom: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+
+body.search .header.outer {
+    background: url("../img/insidepage-header.jpg") no-repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CCCCCC;
+    height: 250px;
     margin-bottom: 14px;
     margin-left: auto;
     margin-right: auto;
