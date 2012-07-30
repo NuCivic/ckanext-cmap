@@ -77,6 +77,19 @@ body.package .page_heading {
     margin-top: 0.9em;
 }
 
+body.search h1.page_heading p{
+    display: none;
+}
+
+body.search .hline {
+    background-color: #37B3EB;
+    height: 14px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+
 header {
   padding: 5px 0px 5px 0px;
 }
