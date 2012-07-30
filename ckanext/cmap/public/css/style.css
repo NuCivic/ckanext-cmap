@@ -14,8 +14,43 @@ body.no-sidebar .content-outer {
     width: 960px;
 }
 
+body.read .header.outer {
+    background: url("../img/header-org2.png") no-repeat scroll 0 0 transparent;
+    border-bottom: 1px solid #CCCCCC;
+    height: 80px;
+    margin-bottom: 14px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 960px;
+}
+
+body.read input.search2 {
+    border: medium none !important;
+    color: #37B3EB;
+    float: right;
+    margin-right: 125px;
+    margin-top: 36px;
+    width: 283px;
+}
+
+body.search input.search2 {
+    border: medium none !important;
+    color: #37B3EB;
+    float: right;
+    margin-right: 437px;
+    margin-top: 196px;
+    width: 283px;
+}
+
+body.read .page_heading {
+    font-size: 32px;
+    font-weight: normal;
+    margin-bottom: -1.5em;
+    margin-top: 0.9em;
+}
+
 body.search .header.outer {
-    background: url("../img/insidepage-header.jpg") no-repeat scroll 0 0 transparent;
+    background: url("../img/main-header.png") no-repeat scroll 0 0 transparent;
     border-bottom: 1px solid #CCCCCC;
     height: 250px;
     margin-bottom: 14px;
@@ -24,6 +59,8 @@ body.search .header.outer {
     width: 960px;
 }
 
+
+
 header {
   padding: 5px 0px 5px 0px;
 }
@@ -31,6 +68,27 @@ header {
 header #logo {
   float: left;
   display:none;
+}
+
+
+.read h1.page_heading p {
+    border: 0 none;
+    color: #FFFFFF;
+    font-size: 30px;
+    left: 115px;
+    max-width: 100%;
+    position: relative;
+    top: -115px;
+    vertical-align: middle;
+}
+
+.read #page-logo {
+    left: 72px;
+    max-height: 36px;
+    max-width: 36px;
+    position: relative;
+    top: -97px;
+    vertical-align: text-top;
 }
 
 header #site-name {
@@ -284,10 +342,11 @@ tbody tr:nth-child(odd) td, tbody tr.odd td {
   border-right: 1px solid #e0e0e0;
   padding-right: 20px;
 }
-.page_heading {
+.page_heading
+ {
   margin-top: 0.9em;
   margin-bottom: 0.7em;
-  font-size: 2.2em;
+  font-size: 32px;
   font-weight: normal;
 }
 
