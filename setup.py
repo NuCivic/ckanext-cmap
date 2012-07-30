@@ -28,5 +28,6 @@ setup(
     cmap_configurer=ckanext.cmap.configurer:CMAPConfigurerPlugin
     cmap_organization_form=ckanext.cmap.forms:CMAPOrganizationForm
     cmap_dataset_form=ckanext.cmap.forms:CMAPDatasetForm
+    cmap_package_controller=ckanext.cmap.cmap_package_controller:CMAPPackageController
     """,
 )
