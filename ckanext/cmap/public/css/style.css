@@ -59,7 +59,23 @@ body.search .header.outer {
     width: 960px;
 }
 
+body.package h1.page_heading p {
+    border: 0 none;
+    color: #333333;
+    font-size: 30px;
+    max-width: 100%;
+    position: relative;
+    vertical-align: middle;
+    top: 0;
+    left: 0;
+}
 
+body.package .page_heading {
+    font-size: 32px;
+    font-weight: normal;
+    margin-bottom: 0.5em;
+    margin-top: 0.9em;
+}
 
 header {
   padding: 5px 0px 5px 0px;
