@@ -75,10 +75,15 @@
           </div>
         </div>
       </header>
-      
-    <div class="header outer"> 
-     <xi:include href="package/simple_search_form.html" /> 
-   </div>
+     
+      <a href="#">
+        <div class="header outer"> 
+            <xi:include href="package/simple_search_form.html" /> 
+        </div>
+      </a>
+     
+
+
     <div class="hline">
     </div>
     <py:with vars="messages = list(h.flash.pop_messages())">
@@ -92,7 +97,7 @@
     <div id="main" class="container" role="main">
       <h1 py:if="defined('page_heading')" class="page_heading">
         <img py:if="defined('page_logo')" id="page-logo" src="${page_logo()}" alt="Page Logo" />
-        ${page_heading()}
+        <p>${page_heading()}</p>
       </h1>
       <div class="row">
         <div class="span12">
