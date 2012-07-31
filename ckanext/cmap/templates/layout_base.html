@@ -84,7 +84,7 @@
         <div class="header outer"> 
             <xi:include href="package/simple_search_form.html" />  
           <py:for each="group in c.groups">
-	      <py:if="group.title == '${page_heading()}'">
+	      <py:if="group.title == 'page_heading()'">
 		 <li> 
                   ${group.title}
 		  ${group.image_url}
