@@ -83,9 +83,17 @@
      
         <div class="header outer"> 
             <xi:include href="package/simple_search_form.html" />  
+          <py:for each="group in c.groups">
+	      <py:if test="group.title is not none and len(group.title) ">
+		 <li> ${group.title}
+		  ${group.image_url}
+		  ${group.website_url} </li>
+	      </py:if>
+	 </py:for>
+
         </div>
    
-    
+
  
 
     <div class="hline">
