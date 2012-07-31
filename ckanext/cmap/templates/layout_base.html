@@ -80,23 +80,21 @@
       </header>
     
 
-  <ul>
-    <py:for each="group in c.groups">
-      <li>
-        ${group.title}
-        ${group.image_url}
-
-      </li>
-    </py:for>
-  </ul>
-   
+ 
       <a href="${h.url('home')}">
         <div class="header outer"> 
             <xi:include href="package/simple_search_form.html" /> 
         </div>
       </a>
 
-
+ 
+  <ul>
+    <py:for each="group_dict in c.group_dicts">
+      <li>
+        ${c.group_dict.website_url}
+      </li>
+    </py:for> 
+  </ul>
 
     <div class="hline">
     </div>
