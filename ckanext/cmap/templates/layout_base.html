@@ -81,20 +81,20 @@
     
 
  
-      <a href="${h.url('home')}">
+     
         <div class="header outer"> 
             <xi:include href="package/simple_search_form.html" /> 
+            <div id="org-logo"></div><div id="org-title"></div>  
         </div>
-      </a>
-
- 
-  <ul>
-    <py:for each="group_dict in c.group_dicts">
+   
+    <py:for each="group in c.groups">
       <li>
-        ${c.group_dict.website_url}
+        ${group.title}
+        ${group.image_url}
+        ${group.website_url}
       </li>
-    </py:for> 
-  </ul>
+     </py:for>
+ 
 
     <div class="hline">
     </div>
@@ -109,7 +109,7 @@
     <div id="main" class="container" role="main">
       <h1 py:if="defined('page_heading')" class="page_heading">
         <img py:if="defined('page_logo')" id="page-logo" src="${page_logo()}" alt="Page Logo" />
-        <p>${page_heading()}</p>
+        ${page_heading()}
       </h1>
       <div class="row">
         <div class="span12">
