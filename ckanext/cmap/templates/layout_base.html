@@ -79,6 +79,15 @@
         </div>
       </header>
     
+
+  <ul>
+    <py:for each="group in c.groups">
+      <li>
+        ${group.title}
+        ${group.image_url}
+      </li>
+    </py:for>
+  </ul>
      
       <a href="${h.url('home')}">
         <div class="header outer"> 
@@ -86,14 +95,7 @@
         </div>
       </a>
 
-  <ul>
-    <py:for each="group in c.groups">
-      <li>
-        ${group.title}
-        <img src="${group.image_url}"></img>
-      </li>
-    </py:for>
-  </ul>
+
 
     <div class="hline">
     </div>
