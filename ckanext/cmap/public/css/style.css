@@ -42,12 +42,7 @@ body.search input.search2 {
     width: 283px;
 }
 
-body.read .page_heading {
-    font-size: 32px;
-    font-weight: normal;
-    margin-bottom: -1.5em;
-    margin-top: 0.9em;
-}
+
 
 body.search .header.outer {
     background: url("../img/main-header.png") no-repeat scroll 0 0 transparent;
@@ -99,26 +94,6 @@ header #logo {
   display:none;
 }
 
-
-.read h1.page_heading p {
-    border: 0 none;
-    color: #FFFFFF;
-    font-size: 30px;
-    left: 115px;
-    max-width: 100%;
-    position: relative;
-    top: -115px;
-    vertical-align: middle;
-}
-
-.read #page-logo {
-    left: 72px;
-    max-height: 36px;
-    max-width: 36px;
-    position: relative;
-    top: -97px;
-    vertical-align: text-top;
-}
 
 header #site-name {
   font-size: 1.4em;
