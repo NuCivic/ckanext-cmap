@@ -48,6 +48,8 @@
              ${defined('body_class') and body_class()} ${request.environ.get('pylons.routes_dict', {}).get('id')}">
 
   <div id="wrap">
+
+
   <header class="container">
         <div class="menu account">
           <span class="ckan-logged-in" style="display: none;">
@@ -68,7 +70,7 @@
         <div class="menu">
           
           <div id="mainmenu">
-            <span py:if="h.check_access('package_create')">${h.nav_link(_('Home'), controller='package', action='search', highlight_actions = 'new index')}</span>
+          <span py:if="h.check_access('package_create')">${h.nav_link(_('Home'), controller='package', action='search', highlight_actions = 'new index')}</span>
             ${h.nav_link(_('Add a dataset'), controller='package', action='new')}
             ${h.nav_link(_('Search'), controller='package', action='search', highlight_actions = 'new index')}
             ${h.nav_named_link(_('Groups'), name='%s_index' % h.default_group_type() )}
@@ -76,14 +78,22 @@
           </div>
         </div>
       </header>
+    
      
       <a href="${h.url('home')}">
         <div class="header outer"> 
             <xi:include href="package/simple_search_form.html" /> 
         </div>
       </a>
-     
 
+  <ul>
+    <py:for each="group in c.groups">
+      <li>
+        ${group.title}
+        <img src="${group.image_url}"></img>
+      </li>
+    </py:for>
+  </ul>
 
     <div class="hline">
     </div>
