@@ -84,11 +84,16 @@
         <div class="header outer"> 
             <xi:include href="package/simple_search_form.html" />  
           <py:for each="group in c.groups">
-	      
-	   </py:for>
+              <py:if test="group.title == 'New Amsterdam Ideas'">
+                <p>${group.title} - ${page_heading()}</p>
+              </py:if>
+	  </py:for>
          
         </div>
    
+
+
+
 
  
 
