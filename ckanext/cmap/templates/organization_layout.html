@@ -25,7 +25,7 @@
           ${h.subnav_named_route( c,h.icon('group_edit') + _('Edit'), 'organization_action', action='edit', id=c.group.name )}
         </li>
         <li class="${'active' if c.action=='apply' else ''} ckan-logged-in" py:if="c.userobj and not c.userobj.is_in_group(c.group)">
-            <a href="${h.url_for(controller='ckanext.cmap.controllers:CMAPOrganizationController', action='apply')}?parent=${c.group.name}">${h.icon('group_edit') + _('Join')}</a>
+            <a href="${h.url_for(controller='ckanext.cmap.cmap_organization_controller:CMAPOrganizationController', action='apply')}?parent=${c.group.name}">${h.icon('group_edit') + _('Join')}</a>
         </li>
 
       </py:when>

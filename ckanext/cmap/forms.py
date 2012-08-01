@@ -30,7 +30,7 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
 
     def before_map(self, map):
         # Map /organizations/* URLs to the custom organization controller.
-        controller = 'ckanext.cmap.controllers:CMAPOrganizationController'
+        controller = 'ckanext.cmap.cmap_organization_controller:CMAPOrganizationController'
         map.connect('/organization/users/{id}', controller=controller,
                     action='users')
         map.connect('/organization/apply/{id}', controller=controller,

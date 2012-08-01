@@ -6,7 +6,7 @@ The reason given for the request was:
 
 "$reason"
 
-Please contact the user to verify and then if you would like to add this user you can do so by visiting ${h.url_for(controller='ckanext.cmap.controllers:CMAPOrganizationController', action='users', id=group.name, qualified=True) }
+Please contact the user to verify and then if you would like to add this user you can do so by visiting ${h.url_for(controller='ckanext.cmap.cmap_organization_controller:CMAPOrganizationController', action='users', id=group.name, qualified=True) }
 
 If you do not wish to add this user you can safely disregard this email.
 
