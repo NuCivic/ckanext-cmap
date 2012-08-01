@@ -83,7 +83,8 @@
           <xi:include href="package/simple_search_form.html" />  
           <py:if test="c.group">
             <py:if test="c.group.image_url">
-              <h1>${c.group.image_url}</h1>
+              <div id="org-logo"><img src="${c.group.image_url}"></div>
+              <div id="org-name">${c.group.title}</div>
             </py:if>
           </py:if>
         </div>
