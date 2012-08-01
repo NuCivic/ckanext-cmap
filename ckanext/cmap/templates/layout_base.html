@@ -84,20 +84,23 @@
 
           <!-- If we are on a dataset (package) page, show the logo of the
           first group that the dataset belongs to. -->
-       
-        </div>
-
+          <py:if test="c.group">
+             <py:if test="c.group.image_url">
+               <div><img src="${c.group.image_url}"></div> 
+             </py:if>
+          </py:if>
+         
           <py:if test="c.pkg_dict">
             <py:if test="c.pkg_dict.group_image_url">
               <img src="${c.pkg_dict.group_image_url}"/>
             </py:if>
           </py:if>
+       
+        </div>
 
-          <py:if test="c.group">
-             <py:if test="c.group.image_url">
-               <p>${c.group.image_url}- ${c.group.title}</p> 
-             </py:if>
-          </py:if>
+          
+
+          
 
     <div class="hline">
     </div>
