@@ -203,6 +203,10 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         schema.update({'cmap_data_subcategory': [converters.convert_from_extras, validators.ignore_missing]})
         schema.update({'cmap_data_field': [converters.convert_from_extras, validators.ignore_missing]})
 
+        # CMAPPackageController adds group_image_url to package dicts, this
+        # needs to be added to the schema so that validation doesn't remove it.
+        schema.update({'group_image_url': []})
+
         return schema
 
     def setup_template_variables(self, context, data_dict):

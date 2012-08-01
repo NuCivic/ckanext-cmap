@@ -81,6 +81,15 @@
     
         <div class="header outer"> 
           <xi:include href="package/simple_search_form.html" />  
+
+          <!-- If we are on a dataset (package) page, show the logo of the
+          first group that the dataset belongs to. -->
+          <py:if test="c.pkg_dict">
+            <py:if test="c.pkg_dict.group_image_url">
+              <img src="${c.pkg_dict.group_image_url}"/>
+            </py:if>
+          </py:if>
+
           <py:if test="c.group">
             <py:if test="c.group.image_url">
               <h1>${c.group.image_url}</h1>
@@ -88,8 +97,6 @@
           </py:if>
         </div>
 
-    
-   
     <div class="hline">
     </div>
     <py:with vars="messages = list(h.flash.pop_messages())">
