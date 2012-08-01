@@ -81,9 +81,11 @@
     
         <div class="header outer"> 
           <xi:include href="package/simple_search_form.html" />  
-          <py:for each="group in c.groups">
-              <h1>${'pop1' if group.title == "page_heading()" else page_heading()}</h1>
-	  </py:for>
+          <py:if test="c.group">
+            <py:if test="c.group.image_url">
+              <py:def function="page_logo">${c.group.image_url}</py:def>
+            </py:if>
+          </py:if>
         </div>
 
     
