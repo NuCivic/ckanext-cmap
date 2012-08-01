@@ -79,24 +79,16 @@
         </div>
       </header>
     
-
-     
         <div class="header outer"> 
-            <xi:include href="package/simple_search_form.html" />  
+          <xi:include href="package/simple_search_form.html" />  
           <py:for each="group in c.groups">
-              <py:if test="group.title == 'page_heading()'">
-                <p>${group.title} - ${page_heading()}</p>
-              </py:if>
+              <h1>${'pip' if group.title=='page_heading' else 'pop'}</h1>
+              
 	  </py:for>
-         
         </div>
+
+    
    
-
-
-
-
- 
-
     <div class="hline">
     </div>
     <py:with vars="messages = list(h.flash.pop_messages())">
