@@ -82,11 +82,14 @@
         <div class="header outer"> 
           <xi:include href="package/simple_search_form.html" />  
           <py:if test="c.group">
-            <py:if test="c.group.image_url">
-              <div id="org-logo"><img src="${c.group.image_url}"></div>
-            </py:if>
+             <py:if test="c.group.image_url">
+               <py:def function="page_logo">${c.group.image_url}</py:def>
+             </py:if>
           </py:if>
         </div>
+
+
+
 
     
    
