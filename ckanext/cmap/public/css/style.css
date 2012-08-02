@@ -85,6 +85,14 @@ body.search .hline {
     width: 960px;
 }
 
+
+#org-logo{
+    width: 40px; 
+    height: 40px; 
+    margin-left: 80px; 
+    margin-top: -50px
+}
+
 header {
   padding: 5px 0px 5px 0px;
 }
