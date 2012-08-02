@@ -95,7 +95,11 @@
         </div>
 
 
-         
+         <py:if test="c.pkg_dict">
+            <py:if test="c.pkg_dict.group_image_url">
+              <img src="${c.pkg_dict.group_image_url}"/>
+            </py:if>
+          </py:if>
           
 
           
