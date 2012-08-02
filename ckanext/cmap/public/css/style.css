@@ -87,11 +87,14 @@ body.search .hline {
 
 
 #org-logo {
-    border: 1px solid grey;
     height: 40px;
     margin-left: 83px;
     margin-top: -55px;
     width: 40px;
+}
+
+#org-logo img{
+   border: 1px solid grey;
 }
 
 #org-name {
