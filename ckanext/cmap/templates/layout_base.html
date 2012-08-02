@@ -76,7 +76,7 @@
             ${h.nav_link(_('Search'), controller='package', action='search', highlight_actions = 'new index')}
             ${h.nav_named_link(_('Groups'), name='%s_index' % h.default_group_type() )}
             ${h.nav_link(_('About'), controller='home', action='about')}
-          <span py:if="h.check_access('package_create')">${h.nav_link(_('Admin'), controller='index', action='admin')}</span>
+          <span py:if="h.check_access('package_create')">${h.nav_link(_('Admin'), controller='admin', action='index')}</span>
           </div>
         </div>
       </header>
