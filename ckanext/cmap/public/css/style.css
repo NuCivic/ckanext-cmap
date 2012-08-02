@@ -86,18 +86,19 @@ body.search .hline {
 }
 
 
-#org-logo{
+#org-logo {
+    border: 1px solid grey;
     height: 40px;
-    margin-left: 42px;
-    margin-top: -29px;
+    margin-left: 83px;
+    margin-top: -55px;
     width: 40px;
 }
 
-#org-name{
-    margin-left: 130px; 
-    margin-top: -50px; 
-    color: #ffffff; 
-    font-size: 30px
+#org-name {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-left: 130px;
+    margin-top: -22px;
 }
 
 header {
