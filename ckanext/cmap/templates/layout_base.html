@@ -94,7 +94,8 @@
           
           <py:if test="c.pkg_dict">
             <py:if test="c.pkg_dict.group_image_url">
-               <p>${c.pkg_dict.group_image_url}</p>
+               <div id="org-logo"><img src="${c.pkg_dict.group_image_url}"></div>
+               <div id="org-name">${page_heading()}</div> 
             </py:if>
           </py:if>
 
@@ -102,7 +103,7 @@
 
 
          
-          
+     
 
           
 
