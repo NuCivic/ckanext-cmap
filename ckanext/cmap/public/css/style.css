@@ -93,6 +93,13 @@ body.search .hline {
     width: 40px;
 }
 
+#org-name{
+    margin-left: 130px; 
+    margin-top: -50px; 
+    color: #ffffff; 
+    font-size: 30px
+}
+
 header {
   padding: 5px 0px 5px 0px;
 }
