@@ -89,15 +89,15 @@
           
          <py:if test="c.group">
              <py:if test="c.group.image_url">
-               <div id="org-logo"><a href="#"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></a></div>
+               <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></a></div>
                <div id="org-name"><a href="#">${page_heading()}</a></div>   
              </py:if>
           </py:if>
           
           <py:if test="c.pkg_dict">
             <py:if test="c.pkg_dict.group_image_url">
-               <div id="org-logo"><img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></div>
-               <div id="org-name">${c.pkg_dict.groups[0].title}</div> 
+               <div id="org-logo"><a href="${c.pkg_dict.website_url}"><img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></a></div>
+               <div id="org-name"><a href="${c.pkg_dict.website_url}">${c.pkg_dict.groups[0].title}</a></div> 
             </py:if>
           </py:if>
 
