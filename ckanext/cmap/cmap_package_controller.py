@@ -40,5 +40,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
             group_dict = logic.get_action('group_show')(context,
                     {'id': group_id})
             pkg_dict['group_image_url'] = group_dict['image_url']
+            pkg_dict['group_website_url'] = group_dict['website_url']
+
 
         return pkg_dict
