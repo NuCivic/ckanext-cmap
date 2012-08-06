@@ -96,8 +96,8 @@
           
           <py:if test="c.pkg_dict">
             <py:if test="c.pkg_dict.group_image_url">
-               <div id="org-logo"><a href="#"><img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></a></div>
-               <div id="org-name"><a href="#">${c.pkg_dict.groups[0].title}</a></div> 
+               <div id="org-logo"><a href="${c.pkg_dict.group_website_url}"><img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></a></div>
+               <div id="org-name"><a href="${c.pkg_dict.group_website_url}">${c.pkg_dict.groups[0].title}</a></div> 
             </py:if>
           </py:if>
 
