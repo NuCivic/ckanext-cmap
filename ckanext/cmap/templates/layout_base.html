@@ -89,8 +89,8 @@
           
          <py:if test="c.group">
              <py:if test="c.group.image_url">
-               <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></div>
-               <div id="org-name">${page_heading()}</div>   
+               <div id="org-logo"><a href="${c.group.website_ur}"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></a></div>
+               <div id="org-name"><a href="${c.group.website_ur}">${page_heading()}</a></div>   
              </py:if>
           </py:if>
           
