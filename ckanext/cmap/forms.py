@@ -207,6 +207,10 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         # needs to be added to the schema so that validation doesn't remove it.
         schema.update({'group_image_url': []})
 
+        # CMAPPackageController adds group_website_url to package dicts, this
+        # needs to be added to the schema so that validation doesn't remove it.
+        schema.update({'group_website_url': []})
+
         # Put group capacity (i.e. public or private) into the schema so it
         # doesn't get removed by validation.
         schema['groups']['capacity'] = []
