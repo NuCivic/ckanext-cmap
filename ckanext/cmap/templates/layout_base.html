@@ -96,11 +96,20 @@
           
           <py:if test="c.pkg_dict">
             <py:if test="c.pkg_dict.group_image_url">
-               <div id="org-logo"><a href="#"><img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></a></div>
-               <div id="org-name"><a href="#">${c.pkg_dict.groups[0].title}</a></div> 
+               <div id="org-logo">
+                 <py:if test="c.group_dict.get('website_url', '')">
+	           <a href="${c.group_dict.website_url}"> <img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></a>
+                 </py:if>
+               </div>
+               <div id="org-name">
+                 <py:if test="c.group_dict.get('website_url', '')">
+	           <a href="${c.group_dict.website_url}"> ${c.pkg_dict.groups[0].title}</a>
+                 </py:if>
+               </div> 
             </py:if>
           </py:if>
 
+  
 
 
         </div>
