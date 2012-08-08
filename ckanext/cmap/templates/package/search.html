@@ -24,6 +24,21 @@
     ${facet_div('tags', _('Tags'))}
     ${facet_div('res_format', _('Resource Formats'))}
     ${facet_div('groups', _('Groups'))}
+    <li class="widget-container widget_text">
+        <h2>Change Language</h2>
+          <div class="textwidget">
+            <ul>
+<?python
+  current_url = request.environ['CKAN_CURRENT_URL']
+?>
+              <li py:for="locale in h.get_available_locales()">
+              <a href="${h.url(current_url, locale=str(locale))}">
+                  ${locale.display_name or locale.english_name}
+                </a>
+              </li>
+            </ul>
+</div>
+</li>
 
     <li class="widget-container widget_text">
         <h2>Other access</h2>
