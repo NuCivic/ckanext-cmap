@@ -137,7 +137,7 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
         # Add the options for the custom 'Group Type' metadata field to the
         # template context.
         toolkit.c.cmap_group_types = ("Municipality", "County",
-                "Citizen Group", "CMAP Project Team", "Other Government")
+               "Other Government", "CMAP Project Team", "Nonprofit Organization", "Other")
 
 
 class CMAPDatasetForm(plugins.SingletonPlugin):
