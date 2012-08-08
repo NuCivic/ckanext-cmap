@@ -132,7 +132,7 @@ if organization:
   <div class="control-group">
     <label class="control-label">Geographical Level</label>
     <div class="controls">
-      <select id="cmap_geographical_level" name="cmap_geographical_level" onChange='$("#save").click()'>
+      <select id="cmap_geographical_level" name="cmap_geographical_level">
         <option value="">None</option>
 	<py:for each="(geog_code, geog_level) in c.cmap_geog_levels">
           <option value="${geog_code}" py:attrs="{'selected': 'selected' if geog_code == data.get('cmap_geographical_level', '') else None}">${geog_level}</option>
