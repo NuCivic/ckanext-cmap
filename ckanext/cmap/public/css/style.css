@@ -101,6 +101,13 @@ body.search .hline {
     margin-top: -22px;
 }
 
+#org-name a:visited,
+#org-name a:hover,
+#org-name a {
+    color: #ffffff;
+    text-decoration: none;
+}
+
 header {
   padding: 5px 0px 5px 0px;
 }
