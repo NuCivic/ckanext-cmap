@@ -115,7 +115,7 @@
                <div id="org-name">
                   <py:if test="c.pkg_dict">
                     <py:if test="c.pkg_dict.has_key('group_website_url')">
-                      <a href="${c.pkg_dict.group_website_url}">${c.pkg_dict.groups[0].title}  ${c.pkg_dict.group_website_url}</a>
+                      <a href=${c.pkg_dict.group_website_url}>${c.pkg_dict.groups[0].title}</a>
                     </py:if>
                   </py:if>
                </div>
