@@ -80,44 +80,28 @@
           </div>
         </div>
       </header>
-    
+
         <div class="header outer"> 
           <xi:include href="package/simple_search_form.html" />  
 
-          <!-- If we are on a dataset (package) page, show the logo of the
-          first group that the dataset belongs to. -->
-          
          <py:if test="c.group">
              <py:if test="c.group.image_url">
-               <div id="org-logo">
-                     <py:if test="c.group_dict.get('website_url', '')">
-                       <a href="${c.group_dict.website_url}">
-                         <img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></a>
-                     </py:if>
-               </div>
-               <div id="org-name">
-                     <py:if test="c.group_dict.get('website_url', '')">
-                       <a href="${c.group_dict.website_url}"> ${page_heading()}</a>
-                     </py:if>
-               </div>   
+               <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></div>
+               <div id="org-name">${page_heading()}</div>   
              </py:if>
           </py:if>
-          
+
+          <!-- If we are on a dataset (package) page, show the logo of the
+          first group that the dataset belongs to. -->
           <py:if test="c.pkg_dict">
             <py:if test="c.pkg_dict.group_image_url">
                <div id="org-logo">
-                 <py:if test="c.pkg_dict">
-                   <py:if test="c.pkg_dict.has_key('group_website_url')">
-                      <a href="${c.pkg_dict.group_website_url}"><img src="${c.pkg_dict.group_image_url}" alt="Page Logo" /></a>
-                   </py:if>
-                 </py:if>
+                 <a href="${c.pkg_dict.group_website_url}">
+                   <img src="${c.pkg_dict.group_image_url}" alt="Page Logo" />
+                 </a>
                </div>
                <div id="org-name">
-                  <py:if test="c.pkg_dict">
-                    <py:if test="c.pkg_dict.has_key('group_website_url')">
-                      <a href="${c.pkg_dict.group_website_url}">${c.pkg_dict.groups[0].title}</a>
-                    </py:if>
-                  </py:if>
+                  ${c.pkg_dict.groups[0].title}
                </div>
             </py:if>
           </py:if>

@@ -27,16 +27,18 @@ class CMAPPackageController(plugins.SingletonPlugin):
     def before_view(self, pkg_dict):
 
         # If the dataset (package) being viewed belongs to a group, add that
-        # group's image_url to pkg_dict for the template to use.
+        # group's image_url and website_url to pkg_dict for the template to
+        # use.
         if pkg_dict['groups']:
 
             # Datasets can actually belong to more than one group, so we just
             # take the first group the package belongs to.
             group_id = pkg_dict['groups'][0]['id']
 
-            # Get the image_url and add it to pkg_dict.
+            # Get the image_url and website_url and add them to pkg_dict.
             context = {'model': base.model, 'session': base.model.Session,
-                    'user': toolkit.c.user or toolkit.c.author}
+                    'user': toolkit.c.user or toolkit.c.author,
+                    'extras_as_string': True}
             group_dict = logic.get_action('group_show')(context,
                     {'id': group_id})
             pkg_dict['group_image_url'] = group_dict.get('image_url', '')
