@@ -37,7 +37,8 @@ class CMAPPackageController(plugins.SingletonPlugin):
 
             # Get the image_url and website_url and add them to pkg_dict.
             context = {'model': base.model, 'session': base.model.Session,
-                    'user': toolkit.c.user or toolkit.c.author}
+                    'user': toolkit.c.user or toolkit.c.author,
+                    'extras_as_string': True}
             group_dict = logic.get_action('group_show')(context,
                     {'id': group_id})
             pkg_dict['group_image_url'] = group_dict.get('image_url', '')
