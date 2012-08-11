@@ -94,7 +94,7 @@
           <!-- If we are on a dataset (package) page, show the logo of the
           first group that the dataset belongs to. -->
           <py:if test="c.pkg_dict">
-            <py:if test="c.pkg_dict.group_image_url">
+            <py:if test="'group_image_url' in c.pkg_dict">
                <div id="org-logo">
                  <a href="${c.pkg_dict.group_website_url}">
                    <img src="${c.pkg_dict.group_image_url}" alt="Page Logo" />
