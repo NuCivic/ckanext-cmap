@@ -215,6 +215,13 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         # doesn't get removed by validation.
         schema['groups']['capacity'] = []
 
+        # Put a few more keys into the schema so they don't get removed by
+        # validation. This stops the user profile page from crashing when the
+        # user has some datasets.
+        schema.update({'isopen': [validators.ignore_missing]})
+        schema.update({'tags': [validators.ignore_missing]})
+        schema.update({'tracking_summary': [validators.ignore_missing]})
+
         return schema
 
     def setup_template_variables(self, context, data_dict):
