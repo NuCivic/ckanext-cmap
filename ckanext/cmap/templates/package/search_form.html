@@ -17,8 +17,8 @@
     <span class="form-select control-group control-order-by">
       <label for="field-order-by">Order by</label>
       <select id="field-order-by" name="sort">
-        <option value="relevance asc"
-                selected="${h.get_request_param('sort') == 'relevance asc' or None}">
+        <option value="score desc, name asc"
+                selected="${h.get_request_param('sort') == 'score desc, name asc' or None}">
           ${_('Relevance')}
         </option>
         <option value="title_string asc"
