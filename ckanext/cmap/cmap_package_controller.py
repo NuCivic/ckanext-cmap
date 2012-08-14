@@ -44,8 +44,11 @@ class CMAPPackageController(plugins.SingletonPlugin):
             pkg_dict['group_image_url'] = group_dict.get('image_url', '')
             pkg_dict['group_website_url'] = group_dict.get('website_url', '')
 
-        toolkit.c.display_values = {}
-        toolkit.c.display_values['cmap_data_category'] = {}
-        toolkit.c.display_values['cmap_data_category']['ARTORGFINA'] = 'foobar'
-
+        #toolkit.c.display_values = {}
+        #toolkit.c.display_values['cmap_data_category'] = {}
+        #toolkit.c.display_values['cmap_data_category']['ARTORGFINA'] = 'foobar'
+        #pkg_dict['display_values'] = {}
+        #pkg_dict['display_values']['cmap_data_category'] = {}
+        #pkg_dict['display_values']['cmap_data_category']['ARTORGFINA'] = 'foobar'
+        pkg_dict['cmap_data_category'] = 'adsfasdf'
         return pkg_dict
