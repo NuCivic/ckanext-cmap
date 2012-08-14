@@ -98,7 +98,7 @@
         </tr>
 
         <!-- Display CMAP's custom cmap_data_category field. -->
-        <tr py:if="c.pkg_dict.cmap_data_category">
+        <tr py:if="'cmap_data_category' in c.pkg_dict">
           <td class="dataset-label">CMAP Data Category</td>
           <td class="dataset-details">${c.display_values.cmap_data_category.get(c.pkg_dict.cmap_data_category, c.pkg_dict.cmap_data_category)}</td>
         </tr>
