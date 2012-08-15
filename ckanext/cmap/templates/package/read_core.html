@@ -98,10 +98,30 @@
         </tr>
 
         <!-- Display CMAP's custom cmap_data_category field. -->
-        <tr py:if="'cmap_data_category' in c.pkg_dict">
-          <td class="dataset-label">CMAP Data Category</td>
-          <td class="dataset-details">${c.display_values.cmap_data_category.get(c.pkg_dict.cmap_data_category, c.pkg_dict.cmap_data_category)}</td>
+        <tr py:if="'cmap_geographical_level' in c.pkg_dict">
+          <td class="dataset-label">CMAP Geographical Level</td>
+          <td class="dataset-details">${c.cmap_geographical_level}</td>
         </tr>
+
+       <tr py:if="'cmap_data_family' in c.pkg_dict">
+          <td class="dataset-label">CMAP Data Family</td>
+          <td class="dataset-details">${c.cmap_data_family}</td>
+        </tr>
+
+       <tr py:if="'cmap_data_category' in c.pkg_dict">
+          <td class="dataset-label">CMAP Data Category</td>
+          <td class="dataset-details">${c.cmap_data_category}</td>
+        </tr>
+        <tr py:if="'cmap_data_subcategory' in c.pkg_dict">
+          <td class="dataset-label">CMAP Data Subcategory</td>
+          <td class="dataset-details">${c.cmap_data_subcategory}</td>
+        </tr>
+
+        <tr py:if="'cmap_data_family' in c.pkg_dict">
+          <td class="dataset-label">CMAP Data Field</td>
+          <td class="dataset-details">${c.cmap_data_field}</td>
+        </tr>
+
 
         <!-- TODO: Display the rest of CMAP's custom metadata fields here,
         following the example of cmap_data_category above. -->
