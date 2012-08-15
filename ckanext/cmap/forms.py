@@ -279,14 +279,10 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
 
         # attributeRegEx regular expression narrows future values to ones 
         # that are children of current values (makes sure selections make sense together)
+        
         attributeRegEx = {'id': data_family}
         dataCatList = metropulse.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'), attributeRegEx)
         toolkit.c.cmap_data_categories = dataCatList
-        for i, v in enumerate(dataCatList):
-            if v[0] == data_cat:
-                toolkit.c.cmap_data_categories_desc = v[1]
-                break
-
 
         attributeRegEx = {'id': data_cat}
         dataSubcatList = metropulse.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'), attributeRegEx)
