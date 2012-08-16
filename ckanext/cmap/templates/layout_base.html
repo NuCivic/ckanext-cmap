@@ -81,31 +81,33 @@
         </div>
       </header>
 
-        <div class="header outer"> 
-          <xi:include href="package/simple_search_form.html" />  
+      <a href="${h.url_for('home')}">
+            <div class="header outer"> 
+            <xi:include href="package/simple_search_form.html" />  
 
-         <py:if test="c.group">
-             <py:if test="c.group.image_url">
-               <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></div>
-               <div id="org-name">${page_heading()}</div>   
-             </py:if>
-          </py:if>
-
-          <!-- If we are on a dataset (package) page, show the logo of the
-          first group that the dataset belongs to. -->
-          <py:if test="c.pkg_dict">
-            <py:if test="'group_image_url' in c.pkg_dict">
-               <div id="org-logo">
-                 <a href="${c.pkg_dict.group_website_url}">
-                   <img src="${c.pkg_dict.group_image_url}" alt="Page Logo" />
-                 </a>
-               </div>
-               <div id="org-name">
-                  ${c.pkg_dict.groups[0].title}
-               </div>
+            <py:if test="c.group">
+                <py:if test="c.group.image_url">
+                <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></div>
+                <div id="org-name">${page_heading()}</div>   
+                </py:if>
             </py:if>
-          </py:if>
-        </div>
+
+            <!-- If we are on a dataset (package) page, show the logo of the
+            first group that the dataset belongs to. -->
+            <py:if test="c.pkg_dict">
+                <py:if test="'group_image_url' in c.pkg_dict">
+                <div id="org-logo">
+                    <a href="${c.pkg_dict.group_website_url}">
+                    <img src="${c.pkg_dict.group_image_url}" alt="Page Logo" />
+                    </a>
+                </div>
+                <div id="org-name">
+                    ${c.pkg_dict.groups[0].title}
+                </div>
+                </py:if>
+            </py:if>
+            </div>
+        </a>
 
     <div class="hline">
     </div>
