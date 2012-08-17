@@ -219,7 +219,16 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         # validation. This stops the user profile page from crashing when the
         # user has some datasets.
         schema.update({'isopen': [validators.ignore_missing]})
-        schema.update({'tags': [validators.ignore_missing]})
+        schema['tags'] = {
+            'name': [validators.not_missing,
+                    validators.not_empty,
+                    unicode,
+                    ],
+            'vocabulary_id': [validators.ignore_missing, unicode],
+            'revision_timestamp': [validators.ignore],
+            'state': [validators.ignore],
+            'display_name': [validators.ignore_missing, unicode],
+            }
         schema.update({'tracking_summary': [validators.ignore_missing]})
 
         return schema
