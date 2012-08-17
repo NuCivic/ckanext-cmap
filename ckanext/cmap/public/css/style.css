@@ -37,7 +37,7 @@ body.search .header.outer {
     width: 960px;
 }
 
-/*   */
+
 #org-logo {
     border: 1px solid grey;
     height: 40px;
@@ -51,7 +51,7 @@ body.read input.search2 {
     color: #37B3EB;
     float: right;
     margin-right: 104px;
-    margin-top: 11px;
+    margin-top: 12px;
     padding: 1px;
     width: 196px;
 }
