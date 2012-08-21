@@ -42,7 +42,7 @@ body.search .header.outer {
     border: 1px solid grey;
     height: 40px;
     margin-left: 83px;
-    margin-top: -23px;
+    margin-top: -29px;
     width: 40px;
 }
 
@@ -101,7 +101,7 @@ body.search .hline {
     color: #FFFFFF;
     font-size: 30px;
     margin-left: 130px;
-    margin-top: -25px;
+    margin-top: -29px;
 }
 
 #org-name a:visited,
