@@ -83,45 +83,59 @@ class CMAPPackageController(plugins.SingletonPlugin):
             GEOG_LEVEL_NOT_FOUND_ALERT = 'Error: Geographical Level Not Found'
             DATA_FAMILY_NOT_FOUND_ALERT = 'Error: Data Family Not Found'
             ID_DOES_NOT_MATCH_ALERT = 'Error: ID Does Not Match Other Selections'
-           
             
-            geogLevelsList = metropulse.getFilteredChildren(geogLevelsXml, "geoglevels", ('id', 'name'))
-            toolkit.c.cmap_geographical_level = GEOG_LEVEL_NOT_FOUND_ALERT
-            for i, v in enumerate(geogLevelsList):
-                if v[0] == geog_level:
-                    toolkit.c.cmap_geographical_level = v[1]
-                    break
+            if geog_level != '':
+                geogLevelsList = metropulse.getFilteredChildren(geogLevelsXml, "geoglevels", ('id', 'name'))
+                toolkit.c.cmap_geographical_level = GEOG_LEVEL_NOT_FOUND_ALERT
+                for i, v in enumerate(geogLevelsList):
+                    if v[0] == geog_level:
+                        toolkit.c.cmap_geographical_level = v[1]
+                        break
+            else:
+                toolkit.c.cmap_geographical_level = ''
 
-            metalist = metropulse.getFilteredChildren(fieldsXml, "data", ('id', 'caption'))
-            toolkit.c.cmap_data_family = DATA_FAMILY_NOT_FOUND_ALERT
-            for i, v in enumerate(metalist):
-                if v[0] == data_family:
-                    toolkit.c.cmap_data_family = v[1]
-                    break
-
-            attributeRegEx = {'id': data_family}
-            metalist = metropulse.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'), attributeRegEx)
-            toolkit.c.cmap_data_category = ID_DOES_NOT_MATCH_ALERT
-            for i, v in enumerate(metalist):
-                if v[0] == data_category:
-                    toolkit.c.cmap_data_category = v[1]
-                    break
+            if data_family != '':
+                metalist = metropulse.getFilteredChildren(fieldsXml, "data", ('id', 'caption'))
+                toolkit.c.cmap_data_family = DATA_FAMILY_NOT_FOUND_ALERT
+                for i, v in enumerate(metalist):
+                    if v[0] == data_family:
+                        toolkit.c.cmap_data_family = v[1]
+                        break
+            else:
+                toolkit.c.cmap_data_family = ''
             
-            attributeRegEx = {'id': data_category}
-            metalist = metropulse.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'), attributeRegEx)
-            toolkit.c.cmap_data_subcategory = ID_DOES_NOT_MATCH_ALERT
-            for i, v in enumerate(metalist):
-                if v[0] == data_subcategory:
-                    toolkit.c.cmap_data_subcategory = v[1]
-                    break
+            if data_category != '':
+                attributeRegEx = {'id': data_family}
+                metalist = metropulse.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'), attributeRegEx)
+                toolkit.c.cmap_data_category = ID_DOES_NOT_MATCH_ALERT
+                for i, v in enumerate(metalist):
+                    if v[0] == data_category:
+                        toolkit.c.cmap_data_category = v[1]
+                        break
+            else:
+                toolkit.c.cmap_data_category = ''
 
-            attributeRegEx = {'id': data_subcategory}
-            metalist = metropulse.getFilteredChildren(fieldsXml, "datasubcat", ('id', 'caption'), attributeRegEx)
-            toolkit.c.cmap_data_field = ID_DOES_NOT_MATCH_ALERT
-            for i, v in enumerate(metalist):
-                if v[0] == data_field:
-                    toolkit.c.cmap_data_field = v[1]
-                    break
+            if data_subcategory != '':
+                attributeRegEx = {'id': data_category}
+                metalist = metropulse.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'), attributeRegEx)
+                toolkit.c.cmap_data_subcategory = ID_DOES_NOT_MATCH_ALERT
+                for i, v in enumerate(metalist):
+                    if v[0] == data_subcategory:
+                        toolkit.c.cmap_data_subcategory = v[1]
+                        break
+            else:
+                toolkit.c.cmap_data_subcategory = ''
+
+            if data_field != '':
+                attributeRegEx = {'id': data_subcategory}
+                metalist = metropulse.getFilteredChildren(fieldsXml, "datasubcat", ('id', 'caption'), attributeRegEx)
+                toolkit.c.cmap_data_field = ID_DOES_NOT_MATCH_ALERT
+                for i, v in enumerate(metalist):
+                    if v[0] == data_field:
+                        toolkit.c.cmap_data_field = v[1]
+                        break
+            else:
+                 toolkit.c.cmap_data_field = ''
 
 
 

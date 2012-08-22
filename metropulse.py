@@ -51,6 +51,10 @@ def getFilteredChildren(xmlString, tag, returnAttrib, attributeRegEx = {}):
         if (e.tag == tag):
             match = True
             for attr, regex in attributeRegEx.iteritems():
+                if regex == '':
+                    match = False
+                    break
+
                 r = re.compile(regex)
                 if (not r.match(e.get(attr))):
                     match = False
