@@ -37,6 +37,12 @@
             <li py:for="admin in group_administrators">${h.linked_user(admin)}</li>
           </ul>
         </li>
+        <li>
+        <h3>Group Type</h3>
+          <py:if test="'cmap_group_type' in c.group_dict">
+            ${c.group_dict.cmap_group_type}
+          </py:if>
+        </li>
         </py:if>
         <py:if test="c.group_dict.get('website_url', '')">
         <li>
