@@ -53,6 +53,10 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
         '''Return the path to the template for the new organization page.'''
         return 'organization_new.html'
 
+    def edit_template(self):
+        '''Return the path to the template for the edit organization page.'''
+        return 'organization_edit.html'
+
     def index_template(self):
         '''Return the path to the template for the organization index page.'''
         return 'organization_index.html'
