@@ -1,14 +1,13 @@
 import ckan
+import ckan.tests
 import paste.fixture
 import pylons.test
 import routes
-from ckan.tests.html_check import HtmlCheckMethods
 from ckan.lib.helpers import json
 
-class TestCMAP(HtmlCheckMethods):
-    '''Unit tests for ckanext-cmap's custom features.
+class TestCMAP:
+    '''Unit tests for ckanext-cmap's custom features.'''
 
-    '''
     @classmethod
     def setupClass(cls):
         cls.app = paste.fixture.TestApp(pylons.test.pylonsapp)
