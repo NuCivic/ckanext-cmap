@@ -10,9 +10,9 @@ BASE_URL = "http://38.98.132.106/api"
 #BASE_URL = "http://opendata.cmap.illinois.gov/api"
 API_KEY="18910fe5-2208-43a2-8b3e-6eef9758481c"
 
-#CMAP MCCLEAN VALUES
-BASE_URL = "http://opendata.cmap.illinois.gov/api"
-API_KEY="18910fe5-2208-43a2-8b3e-6eef9758481c"
+#REPLACE WITH YOUR LOCAL API KEY 
+#BASE_URL = "http://localhost/api"
+#API_KEY="<YOUR KEY>"
 
 
 MP_DOMAIN = 'http://data.cmap.illinois.gov'
