@@ -5,9 +5,10 @@ import urllib2
 import urlparse
 import json
 
-#CHANGE THIS TO YOUR LOCAL API KEY FOR TESTING
-#API_KEY= "8b3bb2f9-4651-4982-965e-cb274ccdcf67"
-#BASE_URL = "http://localhost/api"
+#CMAP MCCLEAN VALUES
+BASE_URL = "http://38.98.132.106/api"
+#BASE_URL = "http://opendata.cmap.illinois.gov/api"
+API_KEY="18910fe5-2208-43a2-8b3e-6eef9758481c"
 
 #CMAP MCCLEAN VALUES
 BASE_URL = "http://opendata.cmap.illinois.gov/api"
