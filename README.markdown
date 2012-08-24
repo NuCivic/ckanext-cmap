@@ -12,6 +12,8 @@ activated then run this command:
 
 ## Testing
 
+### Running CKAN's Tests
+
 ckanext-cmap comes with a `test-core.ini` file that can be used to run CKAN's
 tests with the ckanext-cmap extension enabled. From the ckanext-cmap directory,
 run this command:
@@ -38,3 +40,18 @@ fail due to deliberate changes made by ckanext-cmap to CKAN's behaviour.
 virtual environment.
 
 [nose]: http://readthedocs.org/docs/nose/ "A testing framework for Python"
+
+### Running ckanext-cmap's Tests
+
+ckanext-cmap also comes with its own tests for testing its custom features.
+The code for these tests can be found in `ckanext-cmap/ckanext/cmap/tests/`.
+
+To run these tests you first need to install the
+[Beautiful Soup](http://www.crummy.com/software/BeautifulSoup/) Python library.
+Make sure your virtual environment is active, then run:
+
+    pip install beautifulsoup4
+
+Then to run the tests, run this command from the ckanext-cmap directory:
+
+    nosetests --ckan --with-pylons=test-core.ini ckanext/cmap/tests
