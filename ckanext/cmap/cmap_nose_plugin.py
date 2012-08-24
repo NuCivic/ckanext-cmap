@@ -107,6 +107,8 @@ skip_methods = {
          'test_add_tag', # Need to give organisation
          'test_create_package', # Need to give organisation
          'test_delete_extras', # KeyError: 'extras'
+         'test_create_group', # cmap_auth_functions
+         'test_01_delete_resources', # cmap_auth_functions
         ],
     'ckan.tests.functional.test_activity.TestActivity':
         ['test_user_activity',
@@ -145,6 +147,8 @@ skip_methods = {
     'ckan.tests.functional.test_group.TestNew':
         ['test_3_new_duplicate_group', # CMAP template lacks 'Add A Group'
          'test_2_new', # CMAP template lacks 'Add A Group'
+         'test_new_bad_param', # cmap_auth_functions
+         'test_new_plugin_hook', # cmap_auth_functions
         ],
     'ckan.tests.functional.test_home.TestDatabaseNotInitialised':
         ['test_home_page', # relation 'user' does not exist? Weird
@@ -211,7 +215,23 @@ skip_methods = {
          'test_25_task_status_delete', # No org in package
          'test_41_create_resource', # KeyError: 'resources'
          'test_4_sort_by_metadata_modified', # The input field __junk was not expected
-        ]
+        ],
+
+    # These are all broken by 401 Unauthorized, NotAuthorized exception or
+    # 403 Forbidden from the the cmap_auth_functions plugin (only authorizes
+    # sysadmins to create groups/organizations).
+    'ckan.tests.functional.api.model.test_group.TestGroupsUnversioned':
+        ['test_10_edit_group',
+         'test_register_post_ok',
+        ],
+    'ckan.tests.functional.api.model.test_group.TestGroupsVersion1':
+        ['test_10_edit_group',
+         'test_register_post_ok',
+        ],
+    'ckan.tests.functional.api.model.test_group.TestGroupsVersion2':
+        ['test_10_edit_group',
+         'test_register_post_ok',
+        ],
 }
 
 class CMAPNosePlugin(nose.plugins.Plugin):
