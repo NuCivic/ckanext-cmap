@@ -4,8 +4,6 @@ import ckan.logic as logic
 import ckan.lib.base as base
 import metropulse as mp
 import os
-###DELETE ##############
-import pprint
 
 
 class CMAPPackageController(plugins.SingletonPlugin):
@@ -139,7 +137,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
                  toolkit.c.cmap_data_field = ''
 
         #Add resources that use the MetroPulse API
-        mp.auto_add_metropulse_resources(geog_level, data_subcategory, data_field, pkg_dict)
+        #mp.auto_add_metropulse_resources(geog_level, data_subcategory, data_field, pkg_dict)
        
         return pkg_dict
 
