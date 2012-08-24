@@ -1,6 +1,18 @@
 import xml.etree.ElementTree as ET
 import re
 import sys
+import urllib2
+import urlparse
+import json
+
+#CHANGE THIS TO YOUR LOCAL API KEY FOR TESTING
+#API_KEY= "8b3bb2f9-4651-4982-965e-cb274ccdcf67"
+#BASE_URL = "http://localhost/api"
+
+#CMAP MCCLEAN VALUES
+BASE_URL = "http://opendata.cmap.illinois.gov/api"
+API_KEY="18910fe5-2208-43a2-8b3e-6eef9758481c"
+
 
 MP_DOMAIN = 'http://data.cmap.illinois.gov'
 MP_CHART_BASE = MP_DOMAIN + '/chart/cmapchart.html?GeogKey=&ContainerList=17043&ContainerLevel=CO&IncludeArchive=True&ChartType=COLUMN&ValidChartTypes=LINE,COLUMN'
@@ -9,6 +21,46 @@ MP_MAP_BASE = MP_DOMAIN + '/map/map.html?GeogKey=&ContainerLevel=CO&ContainerLis
 MP_HTML_BASE = MP_DOMAIN + '/DEV/API/HTTPGET/GetCmapData.aspx?GeogKey=&ContainerLevel=CO&ContainerList=17031&ReturnFormat=HTMLRESULT'
 MP_XML_BASE = MP_DOMAIN + '/API/Rest/XML/guestkey/Data?Containerlevel=CO&Containerlist=17031'
 MP_META_BASE = MP_DOMAIN + '/DEV/SYSMAINT/Metadata.aspx?treelevel=4'
+
+
+URL_TYPES = ['chart', 'grid', 'map', 'html', 'xml', 'meta']
+
+
+def auto_add_metropulse_resources(geog_level, data_subcategory, data_field, pkg_dict):
+
+    if geog_level != '' and data_subcategory != '' and data_field != '':         
+        metropulse_metadata = {'GeogLevel': geog_level, 
+                  'DataSubcategory': data_subcategory, 
+                   'DataField': data_field}
+
+        metropulse_urls = getMetroPulseAssetURLs(metropulse_metadata) 
+
+        resource_update_list = {}
+
+        for resource in pkg_dict['resources']:
+            for t in URL_TYPES:
+                if resource['name'] == t: 
+                    if t in metropulse_urls: 
+                        if resource['url'] == metropulse_urls[t]:
+                            metropulse_urls.pop(t)                
+                        else:
+                            resource_update_list[t] = resource['id']
+                
+        for url_type, url in metropulse_urls.iteritems(): 
+            pkg_dict_create = {}
+            pkg_dict_create['name'] = url_type
+            pkg_dict_create['description'] = 'MetroPulse ' + url_type 
+            pkg_dict_create['url'] = url
+            pkg_dict_create['package_id'] = pkg_dict['id']
+
+            if url_type in resource_update_list:                                            
+                api_action = 'resource_update'
+                pkg_dict_create['id'] = resource_update_list[url_type]
+            else:
+                api_action = 'resource_create'
+
+            response = post_to_ckan_api(action=api_action,
+                base_url=BASE_URL, data=pkg_dict_create, api_key=API_KEY)
 
 
 
