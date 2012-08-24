@@ -2,14 +2,17 @@ import ckan.plugins as plugins
 import ckan.plugins.toolkit as toolkit
 import ckan.logic as logic
 import ckan.lib.base as base
-import metropulse
+import metropulse as mp
 import os
+###DELETE ##############
+import pprint
+
 
 class CMAPPackageController(plugins.SingletonPlugin):
     plugins.implements(plugins.IPackageController, inherit=True)
 
     def after_search(self, search_results, search_params):
-
+    
         # Get all of the site's groups.
         context = {'model': base.model, 'session': base.model.Session,
                 'user': toolkit.c.user or toolkit.c.author}
@@ -46,13 +49,13 @@ class CMAPPackageController(plugins.SingletonPlugin):
             pkg_dict['group_image_url'] = group_dict.get('image_url', '')
             pkg_dict['group_website_url'] = group_dict.get('website_url', '')
         
+        geog_level = ''
+        data_family = ''
+        data_category = ''
+        data_subcategory = ''
+        data_field = ''
+       
         if len(pkg_dict['extras']) > 0:   
-            geog_level = ''
-            data_family = ''
-            data_category = ''
-            data_subcategory = ''
-            data_field = ''
-
             for extra in pkg_dict['extras']:
                 if extra['key'] == 'cmap_geographical_level':
                     geog_level = extra['value']
@@ -69,23 +72,21 @@ class CMAPPackageController(plugins.SingletonPlugin):
                 if extra['key'] == 'cmap_data_field':
                     data_field = extra['value']
 
-
+            GEOG_LEVEL_NOT_FOUND_ALERT = 'Error: Geographical Level Not Found'
+            DATA_FAMILY_NOT_FOUND_ALERT = 'Error: Data Family Not Found'
+            ID_DOES_NOT_MATCH_ALERT = 'Error: ID Does Not Match Other Selections'
      
             here = os.path.dirname(__file__)
             rootdir = os.path.dirname(os.path.dirname(here))
-
+            
             geogLevelsFile = open(os.path.join(rootdir, 'MetroPulseGeogLevels.xml'), 'r')
             geogLevelsXml = geogLevelsFile.read()
 
             fieldsFile = open(os.path.join(rootdir, 'MetroPulseFields.xml'), 'r')
             fieldsXml = fieldsFile.read()
-
-            GEOG_LEVEL_NOT_FOUND_ALERT = 'Error: Geographical Level Not Found'
-            DATA_FAMILY_NOT_FOUND_ALERT = 'Error: Data Family Not Found'
-            ID_DOES_NOT_MATCH_ALERT = 'Error: ID Does Not Match Other Selections'
-            
+           
             if geog_level != '':
-                geogLevelsList = metropulse.getFilteredChildren(geogLevelsXml, "geoglevels", ('id', 'name'))
+                geogLevelsList = mp.getFilteredChildren(geogLevelsXml, "geoglevels", ('id', 'name'))
                 toolkit.c.cmap_geographical_level = GEOG_LEVEL_NOT_FOUND_ALERT
                 for i, v in enumerate(geogLevelsList):
                     if v[0] == geog_level:
@@ -95,7 +96,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
                 toolkit.c.cmap_geographical_level = ''
 
             if data_family != '':
-                metalist = metropulse.getFilteredChildren(fieldsXml, "data", ('id', 'caption'))
+                metalist = mp.getFilteredChildren(fieldsXml, "data", ('id', 'caption'))
                 toolkit.c.cmap_data_family = DATA_FAMILY_NOT_FOUND_ALERT
                 for i, v in enumerate(metalist):
                     if v[0] == data_family:
@@ -106,7 +107,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
             
             if data_category != '':
                 attributeRegEx = {'id': data_family}
-                metalist = metropulse.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'), attributeRegEx)
+                metalist = mp.getFilteredChildren(fieldsXml, "datafamily", ('id', 'caption'), attributeRegEx)
                 toolkit.c.cmap_data_category = ID_DOES_NOT_MATCH_ALERT
                 for i, v in enumerate(metalist):
                     if v[0] == data_category:
@@ -117,7 +118,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
 
             if data_subcategory != '':
                 attributeRegEx = {'id': data_category}
-                metalist = metropulse.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'), attributeRegEx)
+                metalist = mp.getFilteredChildren(fieldsXml, "datacat", ('id', 'caption'), attributeRegEx)
                 toolkit.c.cmap_data_subcategory = ID_DOES_NOT_MATCH_ALERT
                 for i, v in enumerate(metalist):
                     if v[0] == data_subcategory:
@@ -128,7 +129,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
 
             if data_field != '':
                 attributeRegEx = {'id': data_subcategory}
-                metalist = metropulse.getFilteredChildren(fieldsXml, "datasubcat", ('id', 'caption'), attributeRegEx)
+                metalist = mp.getFilteredChildren(fieldsXml, "datasubcat", ('id', 'caption'), attributeRegEx)
                 toolkit.c.cmap_data_field = ID_DOES_NOT_MATCH_ALERT
                 for i, v in enumerate(metalist):
                     if v[0] == data_field:
@@ -137,21 +138,9 @@ class CMAPPackageController(plugins.SingletonPlugin):
             else:
                  toolkit.c.cmap_data_field = ''
 
-
-
-        '''
-        #pkg_dict['cmap_data_category'] = pprint.pformat(pkg_dict)
-        toolkit.c.cmap_data_category = pprint.pformat(pkg_dict)
-
-        #pkg_dict['cmap_geographic_level'] 
-        #pkg_dict['cmap_data_family'] 
-        #pkg_dict['cmap_data_category'] 
-        #pkg_dict['cmap_data_subcategory'] 
-        #pkg_dict['cmap_data_field'] 
-        
-        #toolkit.c.display_values = {}
-        #toolkit.c.display_values['cmap_data_category'] = {}
-        #toolkit.c.display_values['cmap_data_category']['ARTORGFINA'] = 'foobar'
-        '''
-
+        #Add resources that use the MetroPulse API
+        mp.auto_add_metropulse_resources(geog_level, data_subcategory, data_field, pkg_dict)
+       
         return pkg_dict
+
+
