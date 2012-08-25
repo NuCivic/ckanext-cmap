@@ -53,7 +53,7 @@ class CMAPPackageController(plugins.SingletonPlugin):
         data_subcategory = ''
         data_field = ''
        
-        if len(pkg_dict['extras']) > 0:   
+        if len(pkg_dict['extras']) > 0 and toolkit.c.action == 'read':   
             for extra in pkg_dict['extras']:
                 if extra['key'] == 'cmap_geographical_level':
                     geog_level = extra['value']
@@ -135,9 +135,9 @@ class CMAPPackageController(plugins.SingletonPlugin):
                         break
             else:
                  toolkit.c.cmap_data_field = ''
-
-        #Add resources that use the MetroPulse API
-        mp.auto_add_metropulse_resources(geog_level, data_subcategory, data_field, pkg_dict)
+        
+            #Add resources that use the MetroPulse API
+            mp.auto_add_metropulse_resources(geog_level, data_subcategory, data_field, pkg_dict)
        
         return pkg_dict
 
