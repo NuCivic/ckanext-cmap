@@ -235,6 +235,11 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
             }
         schema.update({'tracking_summary': [validators.ignore_missing]})
 
+        # This fixes a crash when viewing historical versions of datasets.
+        schema.update({'revision_id': [validators.ignore_missing, unicode]})
+        schema.update({'revision_timestamp':
+            [validators.ignore_missing, unicode]})
+
         return schema
 
     def setup_template_variables(self, context, data_dict):
@@ -262,13 +267,13 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         rootdir = os.path.dirname(os.path.dirname(here))
 
         if 'cmap_data_family' in toolkit.c.pkg_dict:
-            data_family = toolkit.c.pkg_dict['cmap_data_family'] 
+            data_family = toolkit.c.pkg_dict['cmap_data_family']
         else:
             data_family = ''
 
         if 'cmap_data_category' in toolkit.c.pkg_dict:
             data_cat = toolkit.c.pkg_dict['cmap_data_category']
-	else:
+        else:
             data_cat = ''
 
         if 'cmap_data_subcategory' in toolkit.c.pkg_dict:

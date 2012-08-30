@@ -21,11 +21,11 @@
           </span>
       </div>
       
-      <div class="extract">
+      <div class="extract" py:if="'notes' in package">
           ${h.markdown_extract(package.notes)}
       </div>
       
-      <div class="tags2">
+      <div class="tags2" py:if="'tags' in package">
           <div py:if="package.tags" class="tags">
               <span style="color:#ffffff;margin-left:5px; margin-right:5px; padding-left: 5px; padding-right:5px; background-color: #bbbbbb; font-family: helvetica neue;"  py:for="tag in package.tags">${tag.name}</span>
           </div>
