@@ -21,7 +21,7 @@
           </span>
       </div>
       
-      <div class="extract">
+      <div class="extract" py:if="'notes' in package">
           ${h.markdown_extract(package.notes)}
       </div>
       
