@@ -87,28 +87,34 @@ class TestCMAP:
             params=json.dumps(params), extra_environ=extra_environ).json
         assert response['success'] is True
         assert response['result']['name'] == 'my_new_organization'
-    
+
     # TODO: Test creating orgs via v1 and v2 APIs.
 
     def _check_group_read_page(self, response, name, title, description,
-            group_type, website, logo):
+            group_type, website, logo=None):
         assert response.status == 200
         assert response.req.url.endswith('/organization/{}'.format(name))
         assert group_type in response
         assert description in response
 
-        # Test the organization's logo.
         soup = BeautifulSoup(response.body)
-        img = soup.find('img', src=logo)
-        assert img, "Organization's logo should appear on organization's page"
-        assert img.get('alt', None) == title, ("Organization's logo should "
-            "have organization's title as alt text")
-        assert img.find_parents('a', href=website), ("Organization's logo "
-                "should be hyperlinked to organization's website")
 
-        assert len(soup.find_all('a', href=website)) == 2, ("There should be "
-                "two links to the organization's website (text link and logo "
-                "linked to website")
+        # Test the organization's logo.
+        if logo:
+            img = soup.find('img', src=logo)
+            assert img, (
+                "Organization's logo should appear on organization's page")
+            assert img.get('alt', None) == title, ("Organization's logo "
+                "should have organization's title as alt text")
+            assert img.find_parents('a', href=website), ("Organization's logo "
+                    "should be hyperlinked to organization's website")
+
+            assert len(soup.find_all('a', href=website)) == 2, ("There should "
+                    "be two links to the organization's website (text link "
+                    "and logo linked to website)")
+        else:
+            assert len(soup.find_all('a', href=website)) == 1, ("There should "
+                    "be one link to the organization's website")
 
     def test_01_create_group(self):
         # Test creating a group, including the group type, website URL and
@@ -171,7 +177,34 @@ class TestCMAP:
 
     def test_02_group_with_no_logo(self):
         # Test creating and reading a group with a website but no logo.
-        pass
+
+        # First get the new organisation form.
+        offset = routes.url_for(controller='group', action='new')
+        extra_environ = {'Authorization': str(self.testsysadmin.apikey)}
+        response = self.app.get(offset, extra_environ=extra_environ)
+        # The group edit form is the second form (after the search form).
+        form = response.forms[1]
+
+        # Fill out the form, with no image_url, and submit it.
+        form['name'] = 'my_test_organization_with_no_logo'
+        form['title'] = 'My Test Organization'
+        form['description'] = 'my description'
+        form['cmap_group_type'] = 'Municipality'
+        form['website_url'] = 'http://sisinmaru.blog17.fc2.com/'
+        response = form.submit('save', extra_environ=extra_environ)
+
+        # The response from submitting the form should be a 302 redirect.
+        assert response.status == 302, response.status
+        response = response.follow(extra_environ=extra_environ)
+
+        # It should have redirected us to the read page for the organization
+        # we just created.
+        self._check_group_read_page(response,
+                name='my_test_organization_with_no_logo',
+                title='My Test Organization',
+                description='my description',
+                group_type='Municipality',
+                website='http://sisinmaru.blog17.fc2.com/')
 
     def test_02_group_with_no_website(self):
         # Test creating and reading a group with a logo but no website.
