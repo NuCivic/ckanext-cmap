@@ -401,7 +401,6 @@ class TestCMAP:
                 assert response.status == 200
                 assert response.request.url.endswith('/dataset/{0}'.format(
                     dataset['name'])), response.req.url
-                # TODO: Test the contents of the page.
 
     # TODO
     def test_03_create_dataset_with_no_group(self):
