@@ -154,9 +154,10 @@ class TestCMAP:
             assert len(soup.find_all('a', href=website_url)) == 1, (
                 "There should be one link to the organization's website")
 
-    # TODO
     def check_dataset_read_page(self, response, name=None, title=None,
-            tag_string=None, group=None):
+            tag_string=None, group=None, cmap_geographical_level=None,
+            cmap_data_family=None, cmap_data_category=None,
+            cmap_data_subcategory=None, cmap_data_field=None):
         '''Check the contents of a dataset read page.
 
         Given the response from a dataset read page, tests that the page
@@ -164,7 +165,38 @@ class TestCMAP:
         the group's logo, etc.
 
         '''
-        pass
+
+        # Test the the values for ckanext-cmap's custom dataset metadata fields
+        # show on the page.
+        for metadata_field in (cmap_geographical_level, cmap_data_family,
+                cmap_data_category, cmap_data_subcategory, cmap_data_field):
+            if metadata_field is not None:
+                assert metadata_field in response
+
+        # Test that the logo of the dataset's group shows on the dataset's
+        # page, is linked to the group's website, and has the group's title as
+        # alt text.
+        if group is not None:
+            # Get the group from the CKAN API.
+            params = {'id': group}
+            api_response = self.app.post('/api/action/group_show',
+                    params=json.dumps(params)).json
+            assert api_response['success'] is True
+            image_url = api_response['result'].get('image_url', None)
+            website_url = api_response['result'].get('website_url', None)
+            group_title = api_response['result'].get('title', None)
+            if image_url is not None:
+                soup = BeautifulSoup(response.body)
+                img = soup.find('img', source=image_url)
+                assert img, ("Organization's logo should appear on pages of "
+                        "organization's datasets")
+                assert img.get('alt', None) == group_title, ("Organization's "
+                    "logo should have organization's title as alt text")
+                if website_url is not None:
+                    assert img.find_parents('a', href=website_url), (
+                        "Organization's logo should be hyperlinked to "
+                        "organization's website on organization's dataset's "
+                        "pages")
 
     def test_00_add_organization_button_not_logged_in(self):
         '''Test that the "Add an Organization" button doesn't show when not
@@ -397,7 +429,7 @@ class TestCMAP:
 
         for datasets in self.test_datasets.values():
             for dataset in datasets:
-                offset = routes.url_for(controller='dataset', action='read',
+                offset = routes.url_for(controller='package', action='read',
                         id=dataset['name'])
                 response = self.app.get(offset)
                 self.check_dataset_read_page(response, **dataset)
