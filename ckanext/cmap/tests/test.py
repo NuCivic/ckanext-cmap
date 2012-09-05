@@ -125,7 +125,7 @@ class TestCMAP:
 
         '''
         assert response.status == 200
-        assert response.req.url.endswith('/organization/{}'.format(name))
+        assert response.req.url.endswith('/organization/{0}'.format(name))
 
         if cmap_group_type is not None:
             assert cmap_group_type in response, (
@@ -246,7 +246,7 @@ class TestCMAP:
             # It should have redirected us to the read page for the group
             # we just created.
             assert response.status == 200
-            assert response.req.url.endswith('/organization/{}'.format(
+            assert response.req.url.endswith('/organization/{0}'.format(
                 group['name']))
 
     # TODO
@@ -367,7 +367,7 @@ class TestCMAP:
                 # It should have redirected us to the read page for the dataset
                 # we just created.
                 assert response.status == 200
-                assert response.request.url.endswith('/dataset/{}'.format(
+                assert response.request.url.endswith('/dataset/{0}'.format(
                     dataset['name'])), response.req.url
                 # TODO: Test the contents of the page.
 
