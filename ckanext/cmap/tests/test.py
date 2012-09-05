@@ -348,7 +348,7 @@ class TestCMAP:
                 offset = routes.url_for(controller='package', action='new')
                 extra_environ = {'Authorization': api_keys[user]}
                 response = self.app.get(offset, extra_environ=extra_environ)
-                form = response.forms[1]
+                form = response.forms['dataset-edit']
 
                 # Fill out the form and submit it.
                 for key in dataset:
