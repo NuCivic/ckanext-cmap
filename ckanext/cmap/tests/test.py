@@ -449,10 +449,30 @@ class TestCMAP:
             response = self.app.get(offset)
             self.check_group_read_page(response, **group)
 
-    # TODO
-    def test_05_read_users(self):
+    def test_05_read_user_dashboards(self):
+        '''Test the dashboard page for each user.'''
+
+        for user in (self.testsysadmin, self.cmap_sysadmin, self.annafan,
+                self.russianfan, self.tester):
+            offset = routes.url_for(controller='user', action='dashboard',
+                    id=user.name)
+            extra_environ = {'Authorization': str(user.apikey)}
+            response = self.app.get(offset, extra_environ=extra_environ)
+            # Just a quick test that the page doesn't crash, don't bother to
+            # test the contents.
+            assert response.status == 200
+
+    def test_05_read_user_profiles(self):
         '''Test the user read page for each of the test users.'''
-        pass
+
+        for user in (self.testsysadmin, self.cmap_sysadmin, self.annafan,
+                self.russianfan, self.tester):
+            offset = routes.url_for(controller='user', action='read',
+                    id=user.name)
+            response = self.app.get(offset)
+            # Just a quick test that the page doesn't crash, don't bother to
+            # test the contents.
+            assert response.status == 200
 
     def test_06_update_group(self):
         '''Test updating some groups.
