@@ -430,7 +430,6 @@ class TestCMAP:
         # TODO: Add more resources to more datasets, but leave some datasets
         # without resources.
 
-    # TODO
     def test_05_read_datasets(self):
         '''Test the dataset read page for each of the test datasets.'''
 
