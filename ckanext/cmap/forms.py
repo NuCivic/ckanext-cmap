@@ -196,6 +196,8 @@ class CMAPDatasetForm(plugins.SingletonPlugin):
         schema.update({'cmap_data_subcategory': [validators.ignore_missing, unicode, converters.convert_to_extras]})
         schema.update({'cmap_data_field': [validators.ignore_missing, unicode, converters.convert_to_extras]})
 
+        schema.update({'__junk': [validators.ignore]})
+
         return schema
 
     def db_to_form_schema(self):
