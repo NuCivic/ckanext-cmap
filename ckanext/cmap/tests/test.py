@@ -412,15 +412,23 @@ class TestCMAP:
         '''Test trying to create a dataset with multiple groups.'''
         pass
 
-    # TODO
     def test_04_add_resources(self):
         '''Test adding some resources to some datasets.'''
-        # This test should add some resources to some datasets, and leave some
-        # datasets without resources.
-        # Might have to use the resource_create action API function,
-        # as I'm not sure if the resource edit form can be used with TestApp
-        # like we do with the group edit and dataset edit forms above.
-        pass
+
+        params = {
+                'package_id': 'test_dataset',
+                'url': 'http://example.com/myresource.csv',
+                'name': "my csv file",
+                'description': "A link to a CSV file",
+                'format': 'CSV',
+        }
+        extra_environ = {'Authorization': str(self.annafan.apikey)}
+        response = self.app.post('/api/action/resource_create',
+            params=json.dumps(params), extra_environ=extra_environ).json
+        assert response['success'] is True
+
+        # TODO: Add more resources to more datasets, but leave some datasets
+        # without resources.
 
     # TODO
     def test_05_read_datasets(self):
