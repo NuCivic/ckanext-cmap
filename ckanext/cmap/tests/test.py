@@ -572,10 +572,155 @@ class TestCMAP:
         '''
         pass
 
-    # TODO
+    def check_that_dataset_is_private(self):
+
+        # Non-logged-in users should not see the dataset on the front page,
+        # the organization's page, or in search results.
+        for offset in ('/', '/organization/municipality_test_group',
+                '/?q=test_private_dataset'):
+            response = self.app.get(offset)
+            assert response.status == 200
+            soup = BeautifulSoup(response.body)
+            links_to_dataset = soup.find_all('a',
+                    href='/dataset/test_private_dataset')
+            assert len(links_to_dataset) == 0
+
+        # Non-logged-in users should get a 404 when trying to visit the private
+        # dataset's page.
+        response = self.app.get('/dataset/test_private_dataset', status=404)
+
+        # A logged-in user who is not a member of the organization should not
+        # see the dataset on the front page, the organization's page, or in
+        # search results.
+        for offset in ('/', '/organization/municipality_test_group',
+                '/?q=test_private_dataset'):
+            extra_environ = {'Authorization': str(self.tester.apikey)}
+            response = self.app.get(offset, extra_environ=extra_environ)
+            assert response.status == 200
+            soup = BeautifulSoup(response.body)
+            links_to_dataset = soup.find_all('a',
+                    href='/dataset/test_private_dataset')
+            assert len(links_to_dataset) == 0
+
+        # A logged-in user who is not a member of the organization should get
+        # a 404 when trying to visit the private dataset's page.
+        extra_environ = {'Authorization': str(self.tester.apikey)}
+        response = self.app.get('/dataset/test_private_dataset',
+                extra_environ=extra_environ, status=404)
+
+        # A user who is a member of the dataset's organization _should_ see
+        # the private dataset on the organization's page.
+        for offset in ('/organization/municipality_test_group',):
+            extra_environ = {'Authorization': str(self.annafan.apikey)}
+            response = self.app.get(offset, extra_environ=extra_environ)
+            assert response.status == 200
+            soup = BeautifulSoup(response.body)
+            links_to_dataset = soup.find_all('a',
+                    href='/dataset/test_private_dataset')
+            assert len(links_to_dataset) == 1
+
+    def check_that_dataset_is_public(self):
+
+        # Non-logged-in users should see the dataset on the front page, the
+        # organization's page, and in search results.
+        for offset in ('/', '/organization/municipality_test_group',
+                '/?q=test_private_dataset'):
+            response = self.app.get(offset)
+            assert response.status == 200
+            soup = BeautifulSoup(response.body)
+            links_to_dataset = soup.find_all('a',
+                    href='/dataset/test_private_dataset')
+            assert len(links_to_dataset) == 1
+
+        # Non-logged-in users should be able to visit the dataset's page.
+        response = self.app.get('/dataset/test_private_dataset', status=200)
+
+        # A logged-in user who is not a member of the organization should see
+        # the dataset on the front page, the organization's page, and in search
+        # results.
+        for offset in ('/', '/organization/municipality_test_group',
+                '/?q=test_private_dataset'):
+            extra_environ = {'Authorization': str(self.tester.apikey)}
+            response = self.app.get(offset, extra_environ=extra_environ)
+            assert response.status == 200
+            soup = BeautifulSoup(response.body)
+            links_to_dataset = soup.find_all('a',
+                    href='/dataset/test_private_dataset')
+            assert len(links_to_dataset) == 1
+
+        # A logged-in user who is not a member of the organization should be
+        # able to visit the dataset's page.
+        extra_environ = {'Authorization': str(self.tester.apikey)}
+        response = self.app.get('/dataset/test_private_dataset',
+                extra_environ=extra_environ, status=200)
+
+        # A user who is a member of the dataset's organization should see the
+        # dataset on the organization's page.
+        for offset in ('/organization/municipality_test_group',):
+            extra_environ = {'Authorization': str(self.annafan.apikey)}
+            response = self.app.get(offset, extra_environ=extra_environ)
+            assert response.status == 200
+            soup = BeautifulSoup(response.body)
+            links_to_dataset = soup.find_all('a',
+                    href='/dataset/test_private_dataset')
+            assert len(links_to_dataset) == 1
+
     def test_07_private_dataset(self):
         '''Test private datasets.'''
-        pass
+
+        # Get the 'new dataset' form.
+        offset = routes.url_for(controller='package', action='new')
+        extra_environ = {'Authorization': str(self.annafan.apikey)}
+        response = self.app.get(offset, extra_environ=extra_environ)
+        form = response.forms['dataset-edit']
+
+        # Fill out the form and submit it, creating a private dataset.
+        form['name'] = 'test_private_dataset'
+        form['title'] = "Test Private Dataset"
+        form['groups__0__id'] = self.id_for_group('municipality_test_group')
+        form['groups__0__capacity'] = 'private'
+        response = form.submit('save', extra_environ=extra_environ)
+
+        # The response from submitting the form should be 302 redirect.
+        assert response.status == 302
+        response = response.follow(extra_environ=extra_environ)
+
+        # It should have redirected us to the read page for the dataset
+        # we just created.
+        assert response.status == 200
+        assert response.request.url.endswith('/dataset/test_private_dataset')
+
+        self.check_that_dataset_is_private()
+
+        # Update the dataset, making it public.
+        offset = routes.url_for(controller='package', action='edit',
+                id='test_private_dataset')
+        extra_environ = {'Authorization': str(self.annafan.apikey)}
+        response = self.app.get(offset, extra_environ=extra_environ)
+        form = response.forms['dataset-edit']
+        form['groups__0__capacity'] = 'public'
+        response = form.submit('save', extra_environ=extra_environ)
+        assert response.status == 302
+        response = response.follow(extra_environ=extra_environ)
+        assert response.status == 200
+        assert response.request.url.endswith('/dataset/test_private_dataset')
+
+        self.check_that_dataset_is_public()
+
+        # Update the dataset again, making it private again.
+        offset = routes.url_for(controller='package', action='edit',
+                id='test_private_dataset')
+        extra_environ = {'Authorization': str(self.annafan.apikey)}
+        response = self.app.get(offset, extra_environ=extra_environ)
+        form = response.forms['dataset-edit']
+        form['groups__0__capacity'] = 'private'
+        response = form.submit('save', extra_environ=extra_environ)
+        assert response.status == 302
+        response = response.follow(extra_environ=extra_environ)
+        assert response.status == 200
+        assert response.request.url.endswith('/dataset/test_private_dataset')
+
+        self.check_that_dataset_is_private()
 
     # TODO
     def test_08_view_counts(self):
