@@ -19,6 +19,7 @@ class TestCMAP:
         cls.app = paste.fixture.TestApp(pylons.test.pylonsapp)
 
         # Create CKAN's standard test data (War and Peace, Anna Karenina, etc.)
+        ckan.tests.setup_test_search_index()
         ckan.tests.CreateTestData.create()
 
         # CKAN's standard test sysadmin user.
@@ -91,7 +92,7 @@ class TestCMAP:
                 'group': "municipality_test_group",
                 },
                 {'name': "test_dataset_with_no_tags",
-                'title': "Test Dataset",
+                'title': "Test Dataset with No Tags",
                 'group': "municipality_test_group",
                 },
             ]
@@ -539,7 +540,17 @@ class TestCMAP:
         looking for the list of groups.
 
         '''
-        pass
+        response = self.app.get('/')
+        assert response.status == 200
+        soup = BeautifulSoup(response.body)
+
+        # Test for list of datasets.
+        for user in self.test_datasets:
+            for dataset in self.test_datasets[user]:
+                links_to_dataset = soup.find_all('a',
+                        href='/dataset/{0}'.format(dataset['name']),
+                        text=dataset['title'])
+                assert len(links_to_dataset) == 1
 
     # TODO
     def test_07_test_sort(self):
@@ -564,4 +575,9 @@ class TestCMAP:
     # TODO
     def test_07_private_dataset(self):
         '''Test private datasets.'''
+        pass
+
+    # TODO
+    def test_08_view_counts(self):
+        '''Test the view counts in dataset listings.'''
         pass
