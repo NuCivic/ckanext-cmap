@@ -20,6 +20,18 @@
             <a href="${h.url_for(controller='package', action='new', id=None)}">Register it now</a>.
         </p>
     </li>
+<script type="text/javascript">    
+<!-- 
+var xhr = new XMLHttpRequest();
+xhr.open('GET','http://dev.cmap.illinois.gov/DEV/API/HTTPGET/SYSMAINT/AddUserAccount.aspx?email=Uhuru11@enterprise.com&pwd=UhurusPassword&lastname=Uhuru&Firstname=Lieutenant&mi=Z&role=Director%20of%20Communications&profile=Excellent%20phone%20operator&authkey=nuams12&returnformat=JSON');
+xhr.onreadystatechange = function () {
+  if (this.status == 200 && this.readyState == 4) {
+    console.log('response: ' + this.responseText);
+  }
+};
+xhr.send();
+// -->
+</script>
 
     ${facet_div('tags', _('Tags'))}
     ${facet_div('res_format', _('Resource Formats'))}
