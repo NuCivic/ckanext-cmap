@@ -128,6 +128,53 @@ if organization:
 </div>
 
  <!-- CMAP's Geographic level metadata field -->
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript">
+<!--
+
+$(function(){
+  $("select#cmap_data_family").change(function(){
+    $.getJSON("/cgi-bin/mpservice.py?data_family=" + $("select#cmap_data_family").val(),{id: $(this).val(), ajax: 'true'}, function(j){
+      
+      var options = '<option value="">Select</option>';
+      for (var i = 0; i < j.length; i++) {
+        options += '<option value="' + j[i].optionValue + '">' + j[i].optionDisplay + '</option>';
+      }
+      $("select#cmap_data_category").html(options);
+   return false; 
+   })
+})
+
+  $("select#cmap_data_category").change(function(){
+    $.getJSON("/cgi-bin/mpservice.py?data_cat=" + $("select#cmap_data_category").val(),{id: $(this).val(), ajax: 'true'}, function(j){
+
+      var options = '<option value="">Select</option>';
+      for (var i = 0; i < j.length; i++) {
+        options += '<option value="' + j[i].optionValue + '">' + j[i].optionDisplay + '</option>';
+      }
+      $("select#cmap_data_subcategory").html(options);
+    
+   return false;
+   })
+  })
+
+  $("select#cmap_data_subcategory").change(function(){
+    $.getJSON("/cgi-bin/mpservice.py?data_subcat=" + $("select#cmap_data_subcategory").val(),{id: $(this).val(), ajax: 'true'}, function(j){
+
+      var options = '<option value="">Select</option>';
+      for (var i = 0; i < j.length; i++) {
+        options += '<option value="' + j[i].optionValue + '">' + j[i].optionDisplay + '</option>';
+      }
+      $("select#cmap_data_field").html(options);
+
+   return false;
+   })
+  })
+
+})
+// -->
+</script>
+
 
   <div class="control-group">
     <label class="control-label">Geographical Level</label>
@@ -144,6 +191,7 @@ if organization:
   <div class="control-group">
     <label class="control-label">Data Family</label>
     <div class="controls">
+      <!-- <select id="cmap_data_family" name="cmap_data_family" width="300" style="width: 300px" onchange="document.dataset_edit.save.click()"> -->
       <select id="cmap_data_family" name="cmap_data_family" width="300" style="width: 300px">
         <option value="">None</option>
         <py:for each="(family_code, family) in c.cmap_data_families">
@@ -157,7 +205,7 @@ if organization:
     <label class="control-label">Data Category</label>
     <div class="controls">
       <select id="cmap_data_category" name="cmap_data_category" width="400" style="width: 400px">
-        <option value="">None</option>
+        <option value="">None: Choose Family first</option>
         <py:for each="(cat_code, cat) in c.cmap_data_categories">
           <option value="${cat_code}" py:attrs="{'selected': 'selected' if cat_code == data.get('cmap_data_category', '') else None}">${cat}</option>
         </py:for>
@@ -169,7 +217,7 @@ if organization:
     <label class="control-label">Data Subcategory</label>
     <div class="controls">
       <select id="cmap_data_subcategory" name="cmap_data_subcategory" width="400" style="width: 400px">
-        <option value="">None</option>
+        <option value="">None: Choose Category first</option>
         <py:for each="(subcat_code, subcat) in c.cmap_data_subcategories">
           <option value="${subcat_code}" py:attrs="{'selected': 'selected' if subcat_code == data.get('cmap_data_subcategory', '') else None}">${subcat}</option>
         </py:for>
@@ -181,7 +229,7 @@ if organization:
     <label class="control-label">Data Field</label>
     <div class="controls">
       <select id="cmap_data_field" name="cmap_data_field" width="400" style="width: 400px">
-        <option value="">None</option>
+        <option value="">None: Choose Subcategory first</option>
         <py:for each="(field_code, field) in c.cmap_data_fields">
           <option value="${field_code}" py:attrs="{'selected': 'selected' if field_code == data.get('cmap_data_field', '') else None}">${field}</option>
         </py:for>
@@ -341,6 +389,7 @@ if organization:
 </div>
 
 <div class="form-actions">
+  <!-- <input id="save" class="btn btn-primary" name="save" type="submit" value="${_('Save Changes')}" /> -->
   <input id="save" class="btn btn-primary" name="save" type="submit" value="${_('Save Changes')}" />
   <py:if test="c.pkg">
     <input id="cancel" class="btn href-action" name="cancel" type="reset" value="${_('Cancel')}" action="${h.url_for(controller='package', action='read', id=c.pkg.name)}" />
