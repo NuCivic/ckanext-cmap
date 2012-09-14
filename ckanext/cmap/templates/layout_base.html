@@ -66,9 +66,9 @@
         <a href="${h.url('home')}">
           <img width="64" src="${h.url_for_static(g.site_logo)}" alt="${g.site_title} Logo" title="${g.site_title} Logo" id="logo" />
         </a>
-  
+
         <div class="menu">
-          
+
           <div id="mainmenu">
           <span py:if="h.check_access('package_create')"></span>
             ${h.nav_link(_('Home'), controller='package', action='search')}
@@ -81,13 +81,13 @@
         </div>
       </header>
 
-        <div class="header outer"> 
-          <xi:include href="package/simple_search_form.html" />  
+        <div class="header outer">
+          <xi:include href="package/simple_search_form.html" />
 
          <py:if test="c.group">
              <py:if test="c.group.image_url">
                <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></div>
-               <div id="org-name">${page_heading()}</div>   
+               <div id="org-name">${page_heading()}</div>
              </py:if>
           </py:if>
 
@@ -151,13 +151,13 @@
             </content>
           </div> <!-- /content -->
         </div>
-        
+
       </div>
     </div>
     <br/><br/>
   </div>
   <div class="clearfix"></div>
-  
+
   <script src="${h.url_for_static('/scripts/vendor/jquery/1.7.1/jquery.js')}"></script>
   <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/json2.js')}"></script>
   <script type="text/javascript" src="${h.url_for_static('/scripts/vendor/jquery.tmpl/beta1/jquery.tmpl.js')}"></script>
@@ -201,7 +201,7 @@
         }
         $('input[placeholder], textarea[placeholder]').placeholder();
 
-		$(".chzn-select").chosen();
+        $(".chzn-select").chosen();
     });
 
 
