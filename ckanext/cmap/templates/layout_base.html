@@ -83,27 +83,21 @@
         <div class="header outer">
           <xi:include href="package/simple_search_form.html" />
 
-         <py:if test="c.group">
-             <py:if test="c.group.image_url">
-               <div id="org-logo"><img py:if="defined('page_logo')" src="${page_logo()}" alt="Page Logo" /></div>
-               <div id="org-name">${page_heading()}</div>
-             </py:if>
-          </py:if>
-
-          <!-- If we are on a dataset (package) page, show the logo of the
-          first group that the dataset belongs to. -->
-          <py:if test="c.pkg_dict">
-            <py:if test="'group_image_url' in c.pkg_dict">
-               <div id="org-logo">
-                 <a href="${c.pkg_dict.group_website_url}">
-                   <img src="${c.pkg_dict.group_image_url}" alt="Page Logo" />
-                 </a>
-               </div>
-               <div id="org-name">
-                  ${c.pkg_dict.groups[0].title}
-               </div>
-            </py:if>
-          </py:if>
+          <!--! Show the organization's logo on organization and dataset
+          pages. organization_logo(), organization_title() and
+          organization_url() should be placed in the template context by a
+          child template when rendering an organization or dataset page. -->
+          <div py:if="defined('organization_logo')" id="org-logo">
+            <a href="${organization_url()}"
+               py:strip="not defined('organization_url')">
+              <img src="${organization_logo()}"
+                   alt="${organization_title()}"
+                   title="${organization_title()}" />
+            </a>
+          </div>
+          <div py:if="defined('organization_title')" id="org-name">
+            ${organization_title()}
+          </div>
         </div>
 
     <div class="hline">

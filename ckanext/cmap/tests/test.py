@@ -185,10 +185,17 @@ class TestCMAP:
             assert api_response['success'] is True
             image_url = api_response['result'].get('image_url', None)
             website_url = api_response['result'].get('website_url', None)
+
+            # Workaround what seems to be a bug in the CKAN API.
+            if website_url.startswith('"'):
+                website_url = website_url[1:]
+            if website_url.endswith('"'):
+                website_url = website_url[:-1]
+
             group_title = api_response['result'].get('title', None)
             if image_url is not None:
                 soup = BeautifulSoup(response.body)
-                img = soup.find('img', source=image_url)
+                img = soup.find('img', src=image_url)
                 assert img, ("Organization's logo should appear on pages of "
                         "organization's datasets")
                 assert img.get('alt', None) == group_title, ("Organization's "
@@ -482,12 +489,9 @@ class TestCMAP:
         and then testing that the new values show on the group read page.
 
         '''
-        for group_name in ('municipality_test_group', 'county_test_group'
-                'test_group_with_no_group_type', 'test_group_without_image',
-                'test_group_without_website',
-                'test_group_without_website_or_image'):
+        for test_group in self.test_groups:
             offset = routes.url_for(controller='group', action='edit',
-                    id=group_name)
+                    id=test_group['name'])
             extra_environ = {'Authorization': str(self.testsysadmin.apikey)}
             response = self.app.get(offset, extra_environ=extra_environ)
 
@@ -508,7 +512,8 @@ class TestCMAP:
             response = response.follow(extra_environ=extra_environ)
 
             self.check_group_read_page(response,
-                    name=group_name,
+                    name=test_group['name'],
+                    title=test_group['title'],
                     description=new_description,
                     cmap_group_type=new_group_type,
                     website_url=new_website_url,

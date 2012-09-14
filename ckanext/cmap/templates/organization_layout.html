@@ -12,6 +12,17 @@
     else:
         editors = []
   ?>
+
+  <!--! Define organization_logo(), organization_url() and
+  organization_title() for the layout_base.html template to use. -->
+  <py:if test="c.group and c.group.image_url">
+    <py:def function="organization_logo">${c.group.image_url}</py:def>
+  </py:if>
+  <py:if test="c.group_dict and c.group_dict.get('website_url', False)">
+    <py:def function="organization_url">${c.group_dict['website_url']}</py:def>
+  </py:if>
+  <py:def function="organization_title">${c.group.title}</py:def>
+
   <py:match path="minornavigation">
     <ul class="nav nav-pills" py:choose="bool(c.group)">
       <py:when test="True" py:with="can_update=h.check_access('group_update',{'id':c.group.id})">
