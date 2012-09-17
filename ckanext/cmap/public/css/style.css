@@ -1168,6 +1168,30 @@ label.edit-summary {
   color: #000;
 }
 
+/* ===================== */
+/* = Dataset Search Page = */
+/* ===================== */
+body.package.search .tags, body.package.search .groups {
+    padding: 0;
+}
+body.package.search .tags li, body.package.search .groups li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 3px 3px 3px 0px;
+    margin-right: 6px;
+    padding:0 5px 2px 5px;
+    border:none;
+    font-weight:normal;
+    font-size:0.8em;
+    background:#afc6e9;
+}
+body.package.search .tags a, body.package.search .groups a {
+    color: black;
+}
+body.package.search .tags li:hover,
+body.package.search .groups li:hover {
+    background: #bdf;
+}
 
 /* ===================== */
 /* = Dataset View Page = */
