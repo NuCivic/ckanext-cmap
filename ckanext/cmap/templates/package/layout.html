@@ -5,6 +5,30 @@
   py:strip=""
   >
 
+  <?python
+    # If the dataset (package) being viewed belongs to a group, add that
+    # group's image_url and website_url to pkg_dict for the template to
+    # use.
+
+    import ckan.lib.base as base
+    import ckan.plugins.toolkit as toolkit
+
+    if c.pkg_dict and 'groups' in c.pkg_dict:
+
+        # Packages can actually belong to more than one group, so we just
+        # take the first group the package belongs to.
+        group_id = c.pkg_dict['groups'][0]['id']
+
+        # Get the image_url and website_url and add them to pkg_dict.
+        context = {'model': base.model, 'session': base.model.Session,
+                'user': toolkit.c.user or toolkit.c.author,
+                'extras_as_string': True}
+        group_dict = toolkit.get_action('group_show')(context,
+                {'id': group_id})
+        c.pkg_dict['group_image_url'] = group_dict.get('image_url', '')
+        c.pkg_dict['group_website_url'] = group_dict.get('website_url', '')
+  ?>
+
   <!--! Define organization_logo(), organization_url() and
   organization_title() for the layout_base.html template to use. -->
   <py:if test="c.pkg_dict and c.pkg_dict.get('group_image_url', False)">
