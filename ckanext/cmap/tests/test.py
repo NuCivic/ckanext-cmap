@@ -448,6 +448,107 @@ class TestCMAP:
                 response = self.app.get(offset)
                 self.check_dataset_read_page(response, **dataset)
 
+    def test_05_organization_logo(self):
+        '''
+        Test that organization logos show on dataset and organization pages.
+
+        This tests all the dataset and organization pages: read, edit,
+        history, etc.
+
+        '''
+        # Get the list of datasets from the CKAN API.
+        response = self.app.post('/api/action/package_list',
+                params=json.dumps({}))
+        dataset_names = response.json['result']
+        dataset_dicts = []
+        for dataset_name in dataset_names:
+            response = self.app.post('/api/action/package_show',
+                    params=json.dumps({'id': dataset_name}))
+            dataset_dict = response.json['result']
+            if len(dataset_dict.get('groups', [])) > 0:
+                dataset_dicts.append(dataset_dict)
+        assert len(dataset_dicts), "Need some datasets to test with!"
+
+        for dataset in dataset_dicts:
+
+            # Get the dataset's organization from the CKAN API.
+            group = self.app.post('/api/action/group_show',
+                    params=json.dumps({'id': dataset['groups'][0]['name']})
+                    ).json['result']
+
+            # Workaround a CKAN API bug.
+            if group.get('website_url', '').startswith('"'):
+                group['website_url'] = group['website_url'][1:]
+            if group.get('website_url', '').endswith('"'):
+                group['website_url'] = group['website_url'][:-1]
+
+            for offset in (
+                '/dataset/{0}'.format(dataset['name']),
+                '/dataset/editresources/{0}'.format(dataset['name']),
+                '/dataset/{0}/related'.format(dataset['name']),
+                '/dataset/history/{0}'.format(dataset['name']),
+                '/dataset/edit/{0}'.format(dataset['name']),
+                '/dataset/followers/{0}'.format(dataset['name']),
+                ):
+                extra_environ = {'Authorization':
+                        str(self.testsysadmin.apikey)}
+                response = self.app.get(offset, extra_environ=extra_environ)
+                soup = BeautifulSoup(response.body)
+                if group.get('image_url'):
+                    img = soup.find('img', src=group['image_url'])
+                    assert img
+                    assert img.get('alt') == group['title']
+                    if group.get('website_url'):
+                        assert img.find_parents('a', href=group['website_url'])
+
+            for resource in dataset.get('resources', []):
+                response = self.app.get("/dataset/{0}/resource/{1}".format(
+                    dataset['name'], resource['id']))
+                soup = BeautifulSoup(response.body)
+                if group.get('image_url'):
+                    img = soup.find('img', src=group['image_url'])
+                    assert img
+                    assert img.get('alt') == group['title']
+                    if group.get('website_url'):
+                        assert img.find_parents('a', href=group['website_url'])
+
+        # Get the list of groups from the CKAN API.
+        response = self.app.post('/api/action/group_list',
+                params=json.dumps({}))
+        group_names = response.json['result']
+        group_dicts = []
+        for group_name in group_names:
+            response = self.app.post('/api/action/group_show',
+                    params=json.dumps({'id': group_name}))
+            group_dict = response.json['result']
+            if group_dict.get('image_url'):
+
+                # Workaround a CKAN API bug.
+                if group_dict.get('website_url', '').startswith('"'):
+                    group_dict['website_url'] = group_dict['website_url'][1:]
+                if group_dict.get('website_url', '').endswith('"'):
+                    group_dict['website_url'] = group_dict['website_url'][:-1]
+
+                group_dicts.append(group_dict)
+        assert len(group_dicts), "Need some groups with logos to test with!"
+
+        for group in group_dicts:
+            for offset in (
+                '/organization/{0}'.format(group['name']),
+                '/organization/history/{0}'.format(group['name']),
+                '/organization/edit/{0}'.format(group['name']),
+                '/organization/apply/{0}'.format(group['name']),
+                ):
+                response = self.app.get(offset,
+                        extra_environ={'Authorization':
+                            str(self.testsysadmin.apikey)})
+                soup = BeautifulSoup(response.body)
+                img = soup.find('img', src=group['image_url'])
+                assert img
+                assert img.get('alt') == group['title']
+                if group.get('website_url'):
+                    assert img.find_parents('a', href=group['website_url'])
+
     def test_05_read_groups(self):
         '''Test the group read page for each of the test groups.'''
 
