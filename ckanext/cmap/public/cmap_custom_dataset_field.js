@@ -1,6 +1,9 @@
 $(function(){
+  
+  var SERVICE_DOMAIN = 'http://opendata.cmap.illinois.gov'
+
   $("select#cmap_data_family").change(function(){
-    $.getJSON("/cgi-bin/mpservice.py?data_family=" + $("select#cmap_data_family").val(),{id: $(this).val(), ajax: 'true'}, function(j){
+    $.getJSON(SERVICE_DOMAIN + "/cgi-bin/mpservice.py?data_family=" + $("select#cmap_data_family").val(),{id: $(this).val(), ajax: 'true'}, function(j){
 
       var options = '<option value="">Select</option>';
       for (var i = 0; i < j.length; i++) {
@@ -12,7 +15,7 @@ $(function(){
 })
 
   $("select#cmap_data_category").change(function(){
-    $.getJSON("/cgi-bin/mpservice.py?data_cat=" + $("select#cmap_data_category").val(),{id: $(this).val(), ajax: 'true'}, function(j){
+    $.getJSON(SERVICE_DOMAIN + "/cgi-bin/mpservice.py?data_cat=" + $("select#cmap_data_category").val(),{id: $(this).val(), ajax: 'true'}, function(j){
 
       var options = '<option value="">Select</option>';
       for (var i = 0; i < j.length; i++) {
@@ -25,7 +28,7 @@ $(function(){
   })
 
   $("select#cmap_data_subcategory").change(function(){
-    $.getJSON("/cgi-bin/mpservice.py?data_subcat=" + $("select#cmap_data_subcategory").val(),{id: $(this).val(), ajax: 'true'}, function(j){
+    $.getJSON(SERVICE_DOMAIN + "/cgi-bin/mpservice.py?data_subcat=" + $("select#cmap_data_subcategory").val(),{id: $(this).val(), ajax: 'true'}, function(j){
 
       var options = '<option value="">Select</option>';
       for (var i = 0; i < j.length; i++) {
