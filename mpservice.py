@@ -4,7 +4,6 @@ import os
 import cgi
 import cgitb
 import json
-cgitb.enable()
 
 form = cgi.FieldStorage()
 data_family = form.getvalue("data_family")
@@ -44,6 +43,7 @@ for i in rlist:
 
 
 print "Content-Type: text/plain"
+print "Access-Control-Allow-Origin: *"
 #print "Content-Type: application/json"
 print
 print json.dumps(rjson)
