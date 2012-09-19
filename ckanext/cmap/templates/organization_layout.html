@@ -21,8 +21,8 @@
   <py:if test="c.group_dict and c.group_dict.get('website_url', False)">
     <py:def function="organization_url">${c.group_dict['website_url']}</py:def>
   </py:if>
-  <py:if test="c.group_dict and c.group_dict.get('title', False)">
-    <py:def function="organization_title">${c.group_dict['title']}</py:def>
+  <py:if test="c.group">
+    <py:def function="organization_title">${c.group.title}</py:def>
   </py:if>
 
   <py:match path="minornavigation">
