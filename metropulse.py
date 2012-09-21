@@ -3,6 +3,7 @@ import re
 import sys
 import urllib2
 import urlparse
+import urllib
 import json
 
 #CMAP MCCLEAN VALUES
@@ -100,7 +101,7 @@ def post_to_ckan_api(action, base_url, data=None, api_key=None):
     if api_key is not None:
         request.add_header('Authorization', api_key)
     try:
-        response = urllib2.urlopen(request, json.dumps(data))
+        response = urllib2.urlopen(request, urllib.quote(json.dumps(data)))
         # The CKAN API returns a dictionary (in the form of a JSON string)
         # with three keys 'success' (True or False), 'result' and 'help'.
         d = json.loads(response.read())
@@ -113,7 +114,7 @@ def post_to_ckan_api(action, base_url, data=None, api_key=None):
         try:
             # Load the JSON returned by CKAN as a Python dictionary.
             d = json.loads(error_string)
-                
+
             if type(d) is unicode:
                 # Sometimes CKAN returns an erros as a JSON string not a dict,
                 # gloss over it here.
