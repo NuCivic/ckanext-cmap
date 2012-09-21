@@ -54,7 +54,7 @@ class CMAPOrganizationController(base.BaseController):
                               error_summary=action.error_summary(errors))
 
         base.h.flash_success(toolkit._("Your application has been submitted"))
-        base.h.redirect_to( 'publisher_read', id=group.name)
+        base.h.redirect_to('publisher_read', id=group.name)
 
     def _add_publisher_list(self):
         base.c.possible_parents = base.model.Session.query(base.model.Group).\
@@ -64,6 +64,26 @@ class CMAPOrganizationController(base.BaseController):
 
     def apply(self, id=None, data=None, errors=None, error_summary=None):
         '''Send a membership application email to an organization's admins.'''
+
+        # Add the dict of the group we're applying to to the template context.
+        # This enables the group's website_url to be shown in the site header.
+        if id:
+            try:
+                group = base.model.Group.get(id)
+                if not group:
+                    base.abort(404, toolkit._('Group not found'))
+                context = {'model': base.model,
+                           'session': base.model.Session,
+                           'user': base.c.user or base.c.author,
+                           'for_view': True,
+                           'extras_as_string': True}
+                base.c.group_dict = toolkit.get_action('group_show')(context,
+                        {'id': id})
+            except logic.NotFound:
+                base.abort(404, toolkit._('Group not found'))
+            except logic.NotAuthorized:
+                base.abort(401, toolkit._(
+                    'Unauthorized to read group %s') % id)
 
         if 'parent' in base.request.params and not id:
             id = base.request.params['parent']

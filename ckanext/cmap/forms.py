@@ -141,7 +141,14 @@ class CMAPOrganizationForm(plugins.SingletonPlugin):
         # Add the options for the custom 'Group Type' metadata field to the
         # template context.
         toolkit.c.cmap_group_types = ("Municipality", "County",
-               "Other Government", "CMAP Project Team", "Nonprofit Organization", "Other")
+               "Other Government", "CMAP Project Team",
+               "Nonprofit Organization", "Other")
+
+        # Add the group's website URL to the template context.
+        # This is so we can link the organization's logo in the site header to
+        # the organization's website when showing an organization edit page.
+        if 'website_url' in data_dict:
+            toolkit.c.group_website_url = data_dict['website_url']
 
 
 class CMAPDatasetForm(plugins.SingletonPlugin):

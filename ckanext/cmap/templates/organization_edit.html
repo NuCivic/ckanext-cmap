@@ -6,6 +6,23 @@
   <py:def function="page_heading">Edit: ${c.group.display_name}</py:def>
   <py:def function="body_class">${h.literal('no-sidebar organization-header')}</py:def>
 
+  <!--! Define organization_logo() to allow layout_base.html to show the
+  organization logo in the site header on organization pages. -->
+  <py:if test="c.group and c.group.image_url">
+    <py:def function="organization_logo">${c.group.image_url}</py:def>
+  </py:if>
+
+  <!--! Define organization_url() to allow layout_base.html to hyperlink
+  the organization logo to the organization website. -->
+  <py:if test="c.group_website_url">
+    <py:def function="organization_url">${c.group_website_url}</py:def>
+  </py:if>
+
+  <!--! Define organization_title() to allow layout_base.html to use it as the
+  alt text for the organization logo in the site header. -->
+  <py:if test="c.group">
+    <py:def function="organization_title">${c.group.title}</py:def>
+  </py:if>
 
   <div py:match="content" class="group-edit-form">
     ${Markup(c.form)}
@@ -13,4 +30,3 @@
 
   <xi:include href="organization_layout.html" />
 </html>
-

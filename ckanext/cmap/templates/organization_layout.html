@@ -13,16 +13,22 @@
         editors = []
   ?>
 
-  <!--! Define organization_logo(), organization_url() and
-  organization_title() for the layout_base.html template to use. -->
-  <py:if test="c.group and c.group.image_url">
+  <!--! Define organization_logo() to allow layout_base.html to show the
+  organization logo in the site header on organization pages. -->
+  <py:if test="c.group_dict and c.group_dict.get('image_url')">
     <py:def function="organization_logo">${c.group.image_url}</py:def>
   </py:if>
-  <py:if test="c.group_dict and c.group_dict.get('website_url', False)">
+
+  <!--! Define organization_url() to allow layout_base.html to hyperlink
+  the organization logo to the organization website. -->
+  <py:if test="c.group_dict and c.group_dict.get('website_url')">
     <py:def function="organization_url">${c.group_dict['website_url']}</py:def>
   </py:if>
-  <py:if test="c.group">
-    <py:def function="organization_title">${c.group.title}</py:def>
+
+  <!--! Define organization_title() to allow layout_base.html to use it as the
+  alt text for the organization logo in the site header. -->
+  <py:if test="c.group_dict">
+    <py:def function="organization_title">${c.group_dict['title']}</py:def>
   </py:if>
 
   <py:match path="minornavigation">
@@ -38,7 +44,7 @@
           ${h.subnav_named_route( c,h.icon('group_edit') + _('Edit'), 'organization_action', action='edit', id=c.group.name )}
         </li>
         <li class="${'active' if c.action=='apply' else ''} ckan-logged-in" py:if="c.userobj and not c.userobj.is_in_group(c.group)">
-            <a href="${h.url_for(controller='ckanext.cmap.cmap_organization_controller:CMAPOrganizationController', action='apply')}?parent=${c.group.name}">${h.icon('group_edit') + _('Join')}</a>
+            <a href="${h.url_for(controller='ckanext.cmap.cmap_organization_controller:CMAPOrganizationController', action='apply', id=c.group.name)}">${h.icon('group_edit') + _('Join')}</a>
         </li>
 
       </py:when>
