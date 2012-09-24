@@ -20,18 +20,24 @@
   <link rel="shortcut icon" href="${h.url_for_static(g.favicon)}" />
 
   <py:choose>
-  <py:when test="defined('optional_feed')">
-    ${optional_feed()}
-  </py:when>
-  <py:otherwise>
-  <link rel="alternate" type="application/atom+xml" title="${g.site_title} - Recent Revision History" href="${h.url_for(controller='revision', action='list', format='atom', days=1)}" />
-  </py:otherwise>
+    <py:when test="defined('optional_feed')">
+      ${optional_feed()}
+    </py:when>
+    <py:otherwise>
+      <link rel="alternate" type="application/atom+xml"
+            title="${g.site_title} - Recent Revision History"
+            href="${h.url_for(controller='revision', action='list', format='atom', days=1)}" />
+    </py:otherwise>
   </py:choose>
   <link href='http://fonts.googleapis.com/css?family=Ubuntu:400,700' rel='stylesheet' type='text/css' />
 
-  <link rel="stylesheet" href="${h.url_for_static('/scripts/vendor/jqueryui/1.8.14/css/jquery-ui.custom.css')}" type="text/css" media="screen, print" />
-  <link rel="stylesheet" href="${h.url_for_static('/css/bootstrap.min.css')}" type="text/css" media="screen, projection" />
-  <link rel="stylesheet" href="${h.url_for_static('/css/chosen.css')}" type="text/css" />
+  <link rel="stylesheet"
+        href="${h.url_for_static('/scripts/vendor/jqueryui/1.8.14/css/jquery-ui.custom.css')}"
+        type="text/css" media="screen, print" />
+  <link rel="stylesheet" href="${h.url_for_static('/css/bootstrap.min.css')}"
+        type="text/css"  media="screen, projection" />
+  <link rel="stylesheet" href="${h.url_for_static('/css/chosen.css')}"
+        type="text/css" />
   <link rel="stylesheet" href="${h.url_for_static('/css/style.css?v=2')}" />
   ${jsConditionalForIe(9, '&lt;script type="text/javascript" src="' + h.url_for_static('/scripts/vendor/html5shiv/html5.js') + '"&gt;&lt;/script&gt;')}
 
@@ -40,99 +46,103 @@
   </py:if>
 
   ${h.literal(getattr(g, 'template_head_end', ''))}
-
 </head>
 
 <body class="${request.environ.get('pylons.routes_dict', {}).get('action')}
              ${request.environ.get('pylons.routes_dict', {}).get('controller').split(':')[-1]}
-             ${defined('body_class') and body_class()} ${request.environ.get('pylons.routes_dict', {}).get('id')}">
+             ${defined('body_class') and body_class()}
+             ${request.environ.get('pylons.routes_dict', {}).get('id')}">
 
   <div id="wrap">
+    <header class="container">
+      <div class="menu account">
+        <span class="ckan-logged-in" style="display: none;">
+          <a href="${h.url_for(controller='user',action='me')}">${h.gravatar((c.userobj.email_hash if c and c.userobj else ''),size=20)}${c.user}</a>
+          <a href="${h.url_for('/user/_logout')}">Logout</a>
+        </span>
+        <span class="ckan-logged-out">
+          <a href="${h.url_for(controller='user',action='login')}">Login</a>
+          <a href="${h.url_for(controller='user',action='register')}">Register</a>
+        </span>
+      </div>
 
+      <a href="${h.url('home')}">
+        <img width="64" src="${h.url_for_static(g.site_logo)}"
+             alt="${g.site_title} Logo" title="${g.site_title} Logo"
+             id="logo" />
+      </a>
 
-  <header class="container">
-        <div class="menu account">
-          <span class="ckan-logged-in" style="display: none;">
-            <a href="${h.url_for(controller='user',action='me')}">${h.gravatar((c.userobj.email_hash if c and c.userobj else ''),size=20)}${c.user}</a>
-            <a href="${h.url_for('/user/_logout')}">Logout</a>
+      <div class="menu">
+        <div id="mainmenu">
+          ${h.nav_link(_('Home'), controller='package', action='search')}
+          <span py:if="h.check_access('package_create')">
+            ${h.nav_link(_('Add a dataset'), controller='package', action='new')}
           </span>
-          <span class="ckan-logged-out">
-            <a href="${h.url_for(controller='user',action='login')}">Login</a>
-            <a href="${h.url_for(controller='user',action='register')}">Register</a>
+          ${h.nav_named_link(_('Groups'), name='%s_index' % h.default_group_type() )}
+          ${h.nav_link(_('About'), controller='home', action='about')}
+          <span py:if="h.check_access('package_create')">
+            ${h.nav_link(_('Admin'), controller='admin', action='index')}
           </span>
-
-
         </div>
-        <a href="${h.url('home')}">
-          <img width="64" src="${h.url_for_static(g.site_logo)}" alt="${g.site_title} Logo" title="${g.site_title} Logo" id="logo" />
+      </div>
+    </header>
+
+    <div class="header outer">
+      <xi:include href="package/simple_search_form.html" />
+
+      <!--! Show the organization's logo on organization and dataset
+      pages. organization_logo(), organization_title() and
+      organization_url() should be placed in the template context by a
+      child template when rendering an organization or dataset page. -->
+      <div py:if="defined('organization_logo')" id="org-logo">
+        <a href="${organization_url()}"
+           py:strip="not defined('organization_url')">
+          <img src="${organization_logo()}"
+               alt="${organization_title()}"
+               title="${organization_title()}" />
         </a>
-
-        <div class="menu">
-
-          <div id="mainmenu">
-            ${h.nav_link(_('Home'), controller='package', action='search')}
-            <span py:if="h.check_access('package_create')">${h.nav_link(_('Add a dataset'), controller='package', action='new')}</span>
-            <!-- ${h.nav_link(_('Search'), controller='package', action='search', highlight_actions = 'new index')} -->
-            ${h.nav_named_link(_('Groups'), name='%s_index' % h.default_group_type() )}
-            ${h.nav_link(_('About'), controller='home', action='about')}
-          <span py:if="h.check_access('package_create')">${h.nav_link(_('Admin'), controller='admin', action='index')}</span>
-          </div>
-        </div>
-      </header>
-
-        <div class="header outer">
-          <xi:include href="package/simple_search_form.html" />
-
-          <!--! Show the organization's logo on organization and dataset
-          pages. organization_logo(), organization_title() and
-          organization_url() should be placed in the template context by a
-          child template when rendering an organization or dataset page. -->
-          <div py:if="defined('organization_logo')" id="org-logo">
-            <a href="${organization_url()}"
-               py:strip="not defined('organization_url')">
-              <img src="${organization_logo()}"
-                   alt="${organization_title()}"
-                   title="${organization_title()}" />
-            </a>
-          </div>
-          <div py:if="defined('organization_title')" id="org-name">
-            ${organization_title()}
-          </div>
-        </div>
-
-    <div class="hline">
-    </div>
-    <py:with vars="messages = list(h.flash.pop_messages())">
-    <div class="flash-messages container">
-      <div class="alert ${m.category}" py:for="m in messages">
-        ${h.literal(m)}
+      </div>
+      <div py:if="defined('organization_title')" id="org-name">
+        ${organization_title()}
       </div>
     </div>
+
+    <div class="hline"></div>
+
+    <py:with vars="messages = list(h.flash.pop_messages())">
+      <div class="flash-messages container">
+        <div class="alert ${m.category}" py:for="m in messages">
+          ${h.literal(m)}
+        </div>
+      </div>
     </py:with>
 
     <div id="main" class="container" role="main">
       <h1 py:if="defined('page_heading')" class="page_heading">
         ${page_heading()}
       </h1>
+
       <div class="row">
         <div class="span12">
           <div id="minornavigation">
-              <minornavigation></minornavigation>
+            <minornavigation></minornavigation>
           </div>
         </div>
       </div>
+
       <div class="span3 sidebar-outer">
-          <div id="sidebar">
-            <ul class="widget-list">
-              <py:if test="defined('primary_sidebar_extras')">
-                ${primary_sidebar_extras()}
-              </py:if>
-              <primarysidebar>
-                <!-- Primary Side Bar Goes Here -->
-              </primarysidebar>
-            </ul>
-          </div>
+        <div id="sidebar">
+          <ul class="widget-list">
+            <py:if test="defined('primary_sidebar_extras')">
+              ${primary_sidebar_extras()}
+            </py:if>
+            <primarysidebar>
+              <!-- Primary Side Bar Goes Here -->
+            </primarysidebar>
+          </ul>
         </div>
+      </div>
+
       <div class="row">
         <div class="span9 content-outer">
           <div id="content">
@@ -140,13 +150,14 @@
               ${content()}
             </py:if>
             <content>
-              <p>Master content template placeholder &hellip; please replace me.</p>
+              <p>Master content template placeholder &hellip; please replace
+                 me.</p>
             </content>
-          </div> <!-- /content -->
+          </div>
         </div>
-
       </div>
     </div>
+
     <br/><br/>
   </div>
   <div class="clearfix"></div>
@@ -196,8 +207,6 @@
 
         $(".chzn-select").chosen();
     });
-
-
   </script>
 
   <py:if test="h.asbool(config.get('ckan.tracking_enabled', 'false'))">
@@ -208,9 +217,6 @@
     ${optional_footer()}
   </py:if>
 
-${h.literal(getattr(g, 'template_footer_end', ''))}
+  ${h.literal(getattr(g, 'template_footer_end', ''))}
 </body>
 </html>
-
-
-
