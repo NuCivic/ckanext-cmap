@@ -1,0 +1,33 @@
+<html
+  xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:py="http://genshi.edgewall.org/"
+  xmlns:xi="http://www.w3.org/2001/XInclude"
+  py:strip=""
+  >
+  <span class="form-select control-group control-order-by">
+    <label for="field-order-by">Order by</label>
+    <select style='margin-bottom:0' id="field-order-by" name="sort">
+      <option value="score desc, name asc"
+              selected="${h.get_request_param('sort') == 'score desc, name asc' or None}">
+        ${_('Relevance')}
+      </option>
+      <option value="title_string asc"
+              selected="${h.get_request_param('sort') == 'title_string asc' or None}">
+        ${_('Name Ascending')}
+      </option>
+      <option value="title_string desc"
+              selected="${h.get_request_param('sort') == 'title_string desc' or None}">
+        ${_('Name Descending')}
+      </option>
+      <option value="metadata_modified desc"
+              selected="${h.get_request_param('sort') == 'metadata_modified desc' or None}">
+        ${_('Last Modified')}
+      </option>
+      <option value="views_recent desc"
+              selected="${h.get_request_param('sort') == 'views_recent desc' or None}">
+        ${_('Popular')}
+      </option>
+    </select>
+    <button id="submit-order-by" class="btn" type="submit">Go</button>
+  </span>
+</html>

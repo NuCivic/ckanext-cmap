@@ -53,9 +53,12 @@
              ${defined('body_class') and body_class()}
              ${request.environ.get('pylons.routes_dict', {}).get('id')}">
 
-  <div id="wrap">
-    <header class="container">
-      <div class="menu account">
+  <div>
+    <form action="${h.url_for(controller='package', action='search')}"
+          id="dataset-search" class=""
+          method="GET">
+    <header>
+      <div class="">
         <span class="ckan-logged-in" style="display: none;">
           <a href="${h.url_for(controller='user',action='me')}">${h.gravatar((c.userobj.email_hash if c and c.userobj else ''),size=20)}${c.user}</a>
           <a href="${h.url_for('/user/_logout')}">Logout</a>
@@ -88,7 +91,9 @@
     </header>
 
     <div class="header outer">
-      <xi:include href="package/simple_search_form.html" />
+        <input  name="q" value="${c.q}"
+               autocomplete="off"
+               placeholder="${_('Find data - enter keywords here')}" />
 
       <!--! Show the organization's logo on organization and dataset
       pages. organization_logo(), organization_title() and
@@ -159,6 +164,7 @@
     </div>
 
     <br/><br/>
+  </form>
   </div>
   <div class="clearfix"></div>
 
