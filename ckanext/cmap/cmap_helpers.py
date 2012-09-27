@@ -1,10 +1,9 @@
 import ckan.plugins as plugins
 import ckan.lib.helpers as helpers
-import pylons
 
 
 def get_sort_by_url(order):
-    queryvars = pylons.request.queryvars
+    queryvars = dict(plugins.toolkit.request.queryvars)
     if 'sort' in queryvars:
         if queryvars['sort'] == order + ' asc':
             queryvars['sort'] = order + ' desc'
