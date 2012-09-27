@@ -9,7 +9,19 @@
   <ul class="datasets">
     <li class="first">
     <div id="header">
-        <div class="search-name">Name</div><div class="search-popularity">Popularity</div><div class="search-type">Type</div>
+      <div class="search-name">
+        <a href="${h.get_sort_by_url('title_string')}">
+          Name
+        </a>
+      </div>
+      <div class="search-popularity">
+        <a href="${h.get_sort_by_url('views_recent')}">
+          Popularity
+        </a>
+      </div>
+      <div class="search-type">
+        Type
+      </div>
     </div>
     </li>  
     <li py:for="package in packages"

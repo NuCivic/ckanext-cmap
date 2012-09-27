@@ -30,6 +30,7 @@ setup(
     cmap_dataset_form=ckanext.cmap.forms:CMAPDatasetForm
     cmap_package_controller=ckanext.cmap.cmap_package_controller:CMAPPackageController
     cmap_auth_functions=ckanext.cmap.cmap_auth_functions:CMAPAuthFunctions
+    cmap_helpers=ckanext.cmap.cmap_helpers:CMAPHelpers
 
     [nose.plugins.0.10]
     cmap_nose_plugin = ckanext.cmap.cmap_nose_plugin:CMAPNosePlugin
