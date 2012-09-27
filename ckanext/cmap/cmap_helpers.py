@@ -4,7 +4,7 @@ import ckan.lib.helpers as helpers
 
 def get_sort_by_url(order):
     queryvars = dict(plugins.toolkit.request.queryvars)
-    if order in ('views_recent',):
+    if order in ('views_total',):
         default = ' desc'
     else:
         default = ' asc'
