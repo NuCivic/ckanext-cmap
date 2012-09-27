@@ -13,7 +13,10 @@ def get_sort_by_url(order):
             queryvars['sort'] = order + ' asc'
     else:
         queryvars['sort'] = order + ' asc'
-    url = helpers.url_for(controller='package', action='search', **queryvars)
+    if plugins.toolkit.c.id:
+        queryvars['id'] = plugins.toolkit.c.id
+    url = helpers.url_for(controller=plugins.toolkit.c.controller,
+        action=plugins.toolkit.c.action, **queryvars)
     #url = url.replace('%2B', '+')
     return url
 
