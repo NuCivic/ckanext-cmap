@@ -76,7 +76,7 @@ xhr.send();
         <p i18n:msg="item_count"><strong>There was an error while searching.</strong> 
             Please try again.</p>
       </py:if>
-      <py:if test="request.params">      
+      <py:if test="'q' in request.params">
         <h4 i18n:msg="item_count"><strong>${c.page.item_count}</strong> datasets found</h4>            
      </py:if>
       <py:if test="c.page.item_count == 0 and request.params">
